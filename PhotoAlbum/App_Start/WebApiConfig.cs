@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace PhotoAlbum
+namespace PhotoAlbum.WEB
 {
     public static class WebApiConfig
     {
@@ -16,7 +16,7 @@ namespace PhotoAlbum
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller=Home}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }
