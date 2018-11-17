@@ -8,10 +8,11 @@ using PhotoAlbum.BLL.Dtos;
 
 namespace PhotoAlbum.BLL.Interfaces
 {
-    interface IUserService : IDisposable
+    public interface IUserService : IDisposable
     {
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
         Task<IEnumerable<UserDto>> GetAllUsersAsync(Expression<Func<UserDto, bool>> expression);
+        IEnumerable<UserDto> GetAllUsers();
         Task<UserDto> GetSingleAsync(Expression<Func<UserDto, bool>> expression);
     }
 }

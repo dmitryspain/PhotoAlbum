@@ -65,6 +65,12 @@ namespace PhotoAlbum.BLL.Services
             // All is ok ???
         }
 
+        public IEnumerable<PhotoDto> GetAllPhotos()
+        {
+            var photos = _unitOfWork.PhotoRepository.GetAll();
+            return _mapper.Map<IEnumerable<PhotoDto>>(photos);
+        }
+
         public void Dispose()
         {
             _unitOfWork?.Dispose();

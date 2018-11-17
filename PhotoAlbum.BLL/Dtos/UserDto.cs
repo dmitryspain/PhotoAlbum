@@ -13,7 +13,8 @@ namespace PhotoAlbum.BLL.Dtos
         public string Email { get; set; }
         public string Password { get; set; }
         public string Description { get; set; }
-        public DateTime DateOfBirdth { get; set; }
+        public DateTime? DateOfBirdth { get; set; }
+        public int? GalleryId { get; set; }
         public virtual GalleryDto Gallery { get; set; }
         public virtual ICollection<RoleDto> Roles { get; set; }
     }

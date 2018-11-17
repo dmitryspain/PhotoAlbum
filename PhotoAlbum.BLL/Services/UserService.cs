@@ -43,6 +43,14 @@ namespace PhotoAlbum.BLL.Services
                 throw new ArgumentNullException(nameof(users)));
         }
 
+        public IEnumerable<UserDto> GetAllUsers()
+        {
+            var users = _unitOfWork.UserRepository.GetAll();
+            return _mapper.Map<IEnumerable<UserDto>>(users ??
+                throw new ArgumentNullException(nameof(users)));
+        }
+
+
         public async Task<UserDto> GetSingleAsync(Expression<Func<UserDto, bool>> expression)
         {
             var expr = _mapper.Map<Expression<Func<User, bool>>>(expression);

@@ -8,9 +8,10 @@ using PhotoAlbum.BLL.Dtos;
 
 namespace PhotoAlbum.BLL.Interfaces
 {
-    interface IPhotoService : IDisposable
+    public interface IPhotoService : IDisposable
     {
         Task<IEnumerable<PhotoDto>> GetAllPhotosAsync();
+        IEnumerable<PhotoDto> GetAllPhotos();
         Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(int? userId);
         Task<IEnumerable<PhotoDto>> GetAllPhotosAsync(Expression<Func<PhotoDto, bool>> expression);
         Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(Expression<Func<UserDto, bool>> expression);

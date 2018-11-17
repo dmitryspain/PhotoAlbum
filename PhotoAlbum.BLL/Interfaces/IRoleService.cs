@@ -8,7 +8,7 @@ using PhotoAlbum.BLL.Dtos;
 
 namespace PhotoAlbum.BLL.Interfaces
 {
-    interface IRoleService : IDisposable
+    public interface IRoleService : IDisposable
     {
         Task<IEnumerable<RoleDto>> GetAllRolesAsync();
         Task<IEnumerable<RoleDto>> GetAllRolesAsync(Expression<Func<RoleDto, bool>> expression);

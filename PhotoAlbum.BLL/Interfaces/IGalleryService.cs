@@ -8,7 +8,7 @@ using PhotoAlbum.BLL.Dtos;
 
 namespace PhotoAlbum.BLL.Interfaces
 {
-    interface IGalleryService : IDisposable
+    public interface IGalleryService : IDisposable
     {
         Task<GalleryDto> GetGalleryAsync();
         //Task<GalleryDto> GetSingleAsync(Expression<Func<GalleryDto, bool>> expression);

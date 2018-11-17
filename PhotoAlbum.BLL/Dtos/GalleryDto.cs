@@ -9,6 +9,7 @@ namespace PhotoAlbum.BLL.Dtos
 {
     public class GalleryDto : EntityDto<int>
     {
+        public int? UserId { get; set; }
         public virtual ICollection<PhotoDto> Photos { get; set; }
     }
 }

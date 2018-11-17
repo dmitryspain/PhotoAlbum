@@ -10,8 +10,8 @@ namespace PhotoAlbum.DAL.EF.Models
     public class Photo : Entity<int>
     {
         public string Description { get; set; }
-        public DateTime LastUpdate { get; set; }
-        public DateTime UploadedDate { get; set; }
+        public DateTime? LastUpdate { get; set; }
+        public DateTime? UploadedDate { get; set; }
         public virtual Gallery Gallery { get; set; }
     }
 }
