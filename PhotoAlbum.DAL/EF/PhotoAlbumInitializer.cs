@@ -58,11 +58,11 @@ namespace PhotoAlbum.DAL.EF
                 }
             };
 
-            photo.Gallery = gallery;
-            photo2.Gallery = gallery;
-            photo3.Gallery = gallery;
-            photo4.Gallery = gallery;
-            photo5.Gallery = gallery;
+            photo.GalleryId = gallery.Id;
+            photo2.GalleryId = gallery.Id;
+            photo3.GalleryId = gallery.Id;
+            photo4.GalleryId = gallery.Id;
+            photo5.GalleryId = gallery.Id;
             
 
             var role = new Role() { Id = 1 };
@@ -80,8 +80,9 @@ namespace PhotoAlbum.DAL.EF
                 Email = "dmitrysp41n@gmail.com",
                 Password = "password123",
                 Roles = new List<Role>() { role, role2 },
-                Gallery = gallery
+                GalleryId = gallery.Id
             };
+            gallery.UserId = user.Id;
 
             var user2 = new User()
             {
@@ -92,7 +93,7 @@ namespace PhotoAlbum.DAL.EF
                 Email = "Alex@gmail.com",
                 Password = "AlexPassword",
                 Roles = new List<Role>() { role, role3 },
-                Gallery = gallery
+                //GalleryId = gallery.Id
             };
 
             var user3 = new User()
@@ -104,7 +105,7 @@ namespace PhotoAlbum.DAL.EF
                 Email = "Max@gmail.com",
                 Password = "MaxPass",
                 Roles = new List<Role>() { role4, role2 },
-                Gallery = gallery
+                //GalleryId = gallery.Id
             };
 
             var user4 = new User()
@@ -116,7 +117,7 @@ namespace PhotoAlbum.DAL.EF
                 Email = "HS@gmail.com",
                 Password = "passwordHS",
                 Roles = new List<Role>() { role, role5 },
-                Gallery = gallery
+                //GalleryId = gallery.Id
             };
 
             var user5 = new User()
@@ -128,12 +129,12 @@ namespace PhotoAlbum.DAL.EF
                 Email = "Nikita@gmail.com",
                 Password = "NikitaPass",
                 Roles = new List<Role>() { role3, role4 },
-                Gallery = gallery
+                //GalleryId = gallery.Id
             };
 
-            context.Photos.AddRange(new[] { photo, photo2, photo3, photo4, photo5 });
+            context.Photos.AddRange(new [] { photo, photo2, photo3, photo4, photo5 });
             context.Users.AddRange(new [] { user, user2, user3, user4, user5 });
-            context.Roles.AddRange(new[] { role, role2, role3, role4, role5 });
+            context.Roles.AddRange(new [] { role, role2, role3, role4, role5 });
             context.Galleries.Add(gallery);
 
             context.SaveChanges();

@@ -16,7 +16,7 @@ namespace PhotoAlbum.DAL.EF.Models
         public string Password { get; set; }
         public string Description { get; set; }
         public DateTime? DateOfBirdth { get; set; }
-        [Key, ForeignKey("Gallery")]
+        //[Key, ForeignKey("Gallery")]
         public int? GalleryId { get; set; }
         public virtual Gallery Gallery { get; set; }
         public virtual ICollection<Role> Roles { get; set; }

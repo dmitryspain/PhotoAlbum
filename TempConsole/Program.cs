@@ -14,7 +14,7 @@ namespace TempConsole
     {
         static void Main(string[] args)
         {
-            var ninjectKernel = new StandardKernel(new PhotoAlbum.BLL.Infrastructure.Bindings("ShopDbConnection"));
+            var ninjectKernel = new StandardKernel(new PhotoAlbum.BLL.Infrastructure.Bindings("PhotoAlbum"));
             var userService = ninjectKernel.Get<IUserService>();
             var roleService = ninjectKernel.Get<IRoleService>();
             var photoService = ninjectKernel.Get<IPhotoService>();
@@ -28,7 +28,7 @@ namespace TempConsole
             var query = photoService.GetAllPhotos();
             foreach(var q in query)
             {
-                Console.WriteLine("id = " + q.Id  + " ");
+                Console.WriteLine("id = " + q.Id  + " "  /*q.Gallery.Id*/);
             }
 
             Console.WriteLine("Press any key to exit...");
