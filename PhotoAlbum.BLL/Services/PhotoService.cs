@@ -8,7 +8,7 @@ using AutoMapper;
 using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.EF.Models;
-using PhotoAlbum.DAL.EF.UoF.Base;
+using PhotoAlbum.DAL.Interfaces;
 
 namespace PhotoAlbum.BLL.Services
 {
@@ -50,19 +50,21 @@ namespace PhotoAlbum.BLL.Services
 
         public async Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(int? userId)
         {
-            var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
-            var photos = _unitOfWork.PhotoRepository.GetAllAsync(x => x.Gallery.User == user);
+            //var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+            //var photos = _unitOfWork.PhotoRepository.GetAllAsync(x => x.Gallery.User == user);
 
-            return _mapper.Map<IEnumerable<PhotoDto>>(photos);
+            //return _mapper.Map<IEnumerable<PhotoDto>>(photos);
+            return null;
         }
 
         public async Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(Expression<Func<UserDto, bool>> expression)
         {
-            var expr = _mapper.Map<Expression<Func<User, bool>>>(expression);
-            var user = await _unitOfWork.UserRepository.GetSingleAsync(expr);
-            var photos = _unitOfWork.PhotoRepository.GetAllAsync(x => x.Gallery.User == user);
-            return _mapper.Map<IEnumerable<PhotoDto>>(photos);
-            // All is ok ???
+            //var expr = _mapper.Map<Expression<Func<User, bool>>>(expression);
+            //var user = await _unitOfWork.UserRepository.GetSingleAsync(expr);
+            //var photos = _unitOfWork.PhotoRepository.GetAllAsync(x => x.Gallery.User == user);
+            //return _mapper.Map<IEnumerable<PhotoDto>>(photos);
+            //// All is ok ???
+            return null;
         }
 
         public IEnumerable<PhotoDto> GetAllPhotos()
@@ -74,6 +76,11 @@ namespace PhotoAlbum.BLL.Services
         public void Dispose()
         {
             _unitOfWork?.Dispose();
+        }
+
+        public Task UploadPhoto(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

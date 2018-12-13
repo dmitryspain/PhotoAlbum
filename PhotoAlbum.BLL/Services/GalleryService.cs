@@ -8,7 +8,7 @@ using AutoMapper;
 using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.EF.Models;
-using PhotoAlbum.DAL.EF.UoF.Base;
+using PhotoAlbum.DAL.Interfaces;
 
 namespace PhotoAlbum.BLL.Services
 {

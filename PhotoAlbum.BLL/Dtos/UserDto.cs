@@ -7,15 +7,14 @@ using PhotoAlbum.BLL.Dtos.Base;
 
 namespace PhotoAlbum.BLL.Dtos
 {
-    public class UserDto : EntityDto<int>
+    public class UserDto : EntityDto<string>
     {
-        public string Name { get; set; }
+        public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Description { get; set; }
-        public DateTime? DateOfBirdth { get; set; }
-        public int? GalleryId { get; set; }
-        public virtual GalleryDto Gallery { get; set; }
-        public virtual ICollection<RoleDto> Roles { get; set; }
+        public string Role { get; set; }
+        public string ClientProfileId { get; set; }
+        public virtual ClientProfileDto ClientProfile { get; set; }
+        public IEnumerable<string> RolesId { get; set; }
     }
 }

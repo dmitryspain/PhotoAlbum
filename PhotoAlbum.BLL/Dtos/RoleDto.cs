@@ -7,7 +7,9 @@ using PhotoAlbum.BLL.Dtos.Base;
 
 namespace PhotoAlbum.BLL.Dtos
 {
-    public class RoleDto : EntityDto<int>
+    public class RoleDto : EntityDto<string>
     {
+        public string Name { get; set; }
+        public IEnumerable<UserDto> Users { get; set; }
     }
 }

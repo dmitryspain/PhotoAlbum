@@ -7,9 +7,10 @@ using PhotoAlbum.BLL.Dtos.Base;
 
 namespace PhotoAlbum.BLL.Dtos
 {
-    public class GalleryDto : EntityDto<int>
+    public class GalleryDto : EntityDto<string>
     {
-        public int? UserId { get; set; }
+        public string ClientProfileId { get; set; }
+        public virtual ClientProfileDto ClientProfile { get; set; }
         public virtual ICollection<PhotoDto> Photos { get; set; }
     }
 }

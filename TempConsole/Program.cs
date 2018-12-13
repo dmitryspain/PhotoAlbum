@@ -20,19 +20,33 @@ namespace TempConsole
             var photoService = ninjectKernel.Get<IPhotoService>();
             var galleryService = ninjectKernel.Get<IGalleryService>();
 
-            foreach(var user in userService.GetAllUsers())
-            {
+            Method(userService, roleService);
 
-            }
+            
 
-            var query = photoService.GetAllPhotos();
-            foreach(var q in query)
-            {
-                Console.WriteLine("id = " + q.Id  + " "  /*q.Gallery.Id*/);
-            }
+            var query = userService.GetAll();
+            //foreach (var q in query)
+            //{
+            //    Console.WriteLine("id = " + q.Id + " " + q.UserName /*q.Gallery.Id*/);
+            //}
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
+        }
+
+        public static async Task Method(IUserService service, IRoleService roleService)
+        {
+            var users = await roleService.GetAllRolesAsync(x=>x.Name.Length>1);
+
+            foreach(var user in users)
+            {
+                Console.WriteLine("userId = " + user.Id + " name = " + user.Name);
+            }
+            //foreach(var user in await service.GetAllAsync())
+            //{
+            //    Console.WriteLine("id = " + user.Id + " name = " + user.UserName);
+            //}
+            await Task.FromResult(0);
         }
 
     }

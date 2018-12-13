@@ -61,12 +61,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PhotoAlbum\PhotoAlbum.WEB.csproj">
-      <Project>{C99F11CF-D26C-4BF2-8F69-A468F958F5A4}</Project>
-      <Name>PhotoAlbum.WEB</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

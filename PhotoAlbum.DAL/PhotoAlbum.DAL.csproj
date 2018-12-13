@@ -36,6 +36,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -47,33 +53,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EF\Models\Base\Entity.cs" />
-    <Compile Include="EF\Models\Gallery.cs" />
-    <Compile Include="EF\Models\Photo.cs" />
-    <Compile Include="EF\Models\Role.cs" />
-    <Compile Include="EF\Models\User.cs" />
+    <Compile Include="Entities\Base\Entity.cs" />
+    <Compile Include="Entities\Gallery.cs" />
+    <Compile Include="Entities\Photo.cs" />
+    <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\ApplicationRole.cs" />
+    <Compile Include="Entities\ClientProfile.cs" />
     <Compile Include="EF\PhotoAlbumContext.cs" />
     <Compile Include="EF\PhotoAlbumInitializer.cs" />
-    <Compile Include="EF\Repositories\Base\BaseRepository.cs" />
-    <Compile Include="EF\Interfaces\IRepository\IGalleryRepository.cs" />
-    <Compile Include="EF\Interfaces\IRepository\IPhotoRepository.cs" />
-    <Compile Include="EF\Interfaces\IRepository\IRepository.cs" />
-    <Compile Include="EF\Interfaces\IRepository\IRoleRepository.cs" />
-    <Compile Include="EF\Interfaces\IRepository\IUserRepository.cs" />
-    <Compile Include="EF\Repositories\GalleryRepository.cs" />
-    <Compile Include="EF\Repositories\PhotoRepository.cs" />
-    <Compile Include="EF\Repositories\RoleRepository.cs" />
-    <Compile Include="EF\Repositories\UserRepository.cs" />
-    <Compile Include="EF\Interfaces\IUnitOfWork.cs" />
-    <Compile Include="EF\UoF\UnitOfWork.cs" />
+    <Compile Include="Identity\AppRoleManager.cs" />
+    <Compile Include="Identity\AppUserManager.cs" />
+    <Compile Include="Interfaces\IIdentityUnitOfWork.cs" />
+    <Compile Include="Repositories\Base\BaseRepository.cs" />
+    <Compile Include="Interfaces\IRepository\IGalleryRepository.cs" />
+    <Compile Include="Interfaces\IRepository\IPhotoRepository.cs" />
+    <Compile Include="Interfaces\IRepository\IRepository.cs" />
+    <Compile Include="Interfaces\IRepository\IRoleRepository.cs" />
+    <Compile Include="Interfaces\IRepository\IUserRepository.cs" />
+    <Compile Include="Repositories\GalleryRepository.cs" />
+    <Compile Include="Repositories\IdentityUnitOfWork.cs" />
+    <Compile Include="Repositories\PhotoRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EF\UoF\Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

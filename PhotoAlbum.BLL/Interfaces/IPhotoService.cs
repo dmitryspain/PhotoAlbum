@@ -10,6 +10,7 @@ namespace PhotoAlbum.BLL.Interfaces
 {
     public interface IPhotoService : IDisposable
     {
+        Task UploadPhoto(string path);
         Task<IEnumerable<PhotoDto>> GetAllPhotosAsync();
         IEnumerable<PhotoDto> GetAllPhotos();
         Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(int? userId);

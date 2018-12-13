@@ -2,10 +2,9 @@
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.BLL.Services;
 using PhotoAlbum.DAL.EF;
-using PhotoAlbum.DAL.EF.Interfaces.IRepository;
-using PhotoAlbum.DAL.EF.Repositories;
-using PhotoAlbum.DAL.EF.UoF;
-using PhotoAlbum.DAL.EF.UoF.Base;
+using PhotoAlbum.DAL.Interfaces;
+using PhotoAlbum.DAL.Interfaces.IRepository;
+using PhotoAlbum.DAL.Repositories;
 
 namespace PhotoAlbum.BLL.Infrastructure
 {
@@ -26,6 +25,7 @@ namespace PhotoAlbum.BLL.Infrastructure
             Bind<IPhotoRepository>().To<PhotoRepository>();
             Bind<IGalleryRepository>().To<GalleryRepository>();
 
+            Bind<IIdentityUnitOfWork>().To<IdentityUnitOfWork>();
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<PhotoAlbumContext>().ToSelf().WithConstructorArgument(_connectionString);
         }
