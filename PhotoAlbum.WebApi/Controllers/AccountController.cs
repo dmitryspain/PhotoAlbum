@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -321,11 +322,11 @@ namespace PhotoAlbum.WebApi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IdentityResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return IdentityResult.Failed("Model isn't valid"); //BadRequest(ModelState);
             }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
@@ -334,10 +335,10 @@ namespace PhotoAlbum.WebApi.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                return IdentityResult.Failed(result.Errors.FirstOrDefault());// GetErrorResult(result);
             }
 
-            return Ok();
+            return result;
         }
 
         // POST api/Account/RegisterExternal
