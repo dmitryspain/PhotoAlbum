@@ -126,7 +126,7 @@ namespace PhotoAlbum.WebApi.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -259,9 +259,9 @@ namespace PhotoAlbum.WebApi.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -318,6 +318,27 @@ namespace PhotoAlbum.WebApi.Controllers
 
             return logins;
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("UserClaims")]
+        public AccountModel GetUserClaims()
+        {
+            var identityClaims = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identityClaims.Claims;
+
+            var model = new AccountModel();
+            //model.UserName = identityClaims.FindFirst("UserName").Value;
+            model.Email = /*identityClaims.FindFirst("Email").Value ??*/ "postmantest@gmail.com";
+            model.LoggedOn = /*identityClaims.FindFirst("LoggedOn").Value ?? */"NOW)";
+
+            return model;
+        }
+
+
+
+
+
 
         // POST api/Account/Register
         [AllowAnonymous]
