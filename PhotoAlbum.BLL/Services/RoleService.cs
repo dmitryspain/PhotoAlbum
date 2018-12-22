@@ -49,9 +49,9 @@ namespace PhotoAlbum.BLL.Services
             return await _unitOfWork.RoleRepository.CreateAsync(new ApplicationRole(roleName));
         }
 
-        public async Task<IdentityResult> DeleteAsync(string roleId)
+        public async Task<IdentityResult> DeleteAsync(int roleId)
         {
-            if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
+            //if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
 
             var role = await _unitOfWork.RoleRepository.FindByIdAsync(roleId);
             return await _unitOfWork.RoleRepository.DeleteAsync(role);
@@ -62,9 +62,9 @@ namespace PhotoAlbum.BLL.Services
             _unitOfWork?.Dispose();
         }
 
-        public async Task<RoleDto> FindByIdAsync(string roleId)
+        public async Task<RoleDto> FindByIdAsync(int roleId)
         {
-            if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
+            //if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
             var role = await _unitOfWork.RoleRepository.FindByIdAsync(roleId);
 
             return _mapper.Map<RoleDto>(role);
@@ -86,9 +86,9 @@ namespace PhotoAlbum.BLL.Services
             return _mapper.Map<IEnumerable<RoleDto>>(roles);
         }
 
-        public async Task<IdentityResult> UpdateAsync(string roleId)
+        public async Task<IdentityResult> UpdateAsync(int roleId)
         {
-            if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
+            //if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
 
             var role = await _unitOfWork.RoleRepository.FindByIdAsync(roleId);
             _unitOfWork.RoleRepository.Update(role);

@@ -12,21 +12,17 @@ namespace PhotoAlbum.BLL.Interfaces
 {
     public interface IUserService : IDisposable
     {
-        //Task<IEnumerable<UserDto>> GetAllUsersAsync();
-        //Task<IEnumerable<UserDto>> GetAllUsersAsync(Expression<Func<UserDto, bool>> expression);
-        //IEnumerable<UserDto> GetAllUsers();
-        //Task<UserDto> GetSingleAsync(Expression<Func<UserDto, bool>> expression);
-
         Task<UserDto> FindAsync(string userName, string password);
-        Task<UserDto> FindByIdAsync(string userId);
+        Task<UserDto> FindByIdAsync(int userId);
         Task<ClaimsIdentity> CreateIdentityAsync(UserDto user, string authenticationType);
         Task<IdentityResult> CreateAsync(UserDto userDto, string password);
         Task<IdentityResult> UpdateAsync(UserDto user);
-        Task<IdentityResult> DeleteAsync(string userId);
-        Task<IdentityResult> AddToRoleAsync(string userId, string role);
-        Task<IdentityResult> RemoveFromRoleAsync(string userId, string role);
+        Task<IdentityResult> DeleteAsync(int userId);
+        Task<IdentityResult> AddToRoleAsync(int userId, string role);
+        Task<IdentityResult> RemoveFromRoleAsync(int userId, string role);
         Task<List<UserDto>> GetAllAsync();
         List<UserDto> GetAll();
+        Task<IList<string>> GetRolesAsync(int userId);
         IQueryable<UserDto> Users { get; }
     }
 }
