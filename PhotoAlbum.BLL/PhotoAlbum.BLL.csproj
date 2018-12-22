@@ -81,6 +81,10 @@
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Constans\PhotoAlbum.Constans.csproj">
+      <Project>{add10094-8c6b-457f-baa1-5d871535e22e}</Project>
+      <Name>PhotoAlbum.Constans</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhotoAlbum.DAL\PhotoAlbum.DAL.csproj">
       <Project>{006c8faa-938f-4b53-a190-33c40151076f}</Project>
       <Name>PhotoAlbum.DAL</Name>

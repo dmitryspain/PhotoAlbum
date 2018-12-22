@@ -36,17 +36,17 @@ namespace TempConsole
 
         public static async Task Method(IUserService service, IRoleService roleService)
         {
-            var users = await roleService.GetAllRolesAsync(x=>x.Name.Length>1);
+            //var users = await roleService.GetAllRolesAsync(x=>x.Name.Length>1);
 
-            foreach(var user in users)
-            {
-                Console.WriteLine("userId = " + user.Id + " name = " + user.Name);
-            }
-            //foreach(var user in await service.GetAllAsync())
+            //foreach(var user in users)
             //{
-            //    Console.WriteLine("id = " + user.Id + " name = " + user.UserName);
+            //    Console.WriteLine("userId = " + user.Id + " name = " + user.Name);
             //}
-            await Task.FromResult(0);
+            ////foreach(var user in await service.GetAllAsync())
+            ////{
+            ////    Console.WriteLine("id = " + user.Id + " name = " + user.UserName);
+            ////}
+            //await Task.FromResult(0);
         }
 
     }

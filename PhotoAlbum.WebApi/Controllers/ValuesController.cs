@@ -8,12 +8,14 @@ using System.Web.Http;
 using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.BLL.Services;
+using PhotoAlbum.Constans;
 
 namespace PhotoAlbum.WebApi.Controllers
 {
     //[Authorize]
     public class ValuesController : ApiController
     {
+        private const string AdminAndUser = "Administrators,Users";
         private IUserService _userService;
         private IRoleService _roleService;
 
@@ -26,7 +28,7 @@ namespace PhotoAlbum.WebApi.Controllers
         // GET api/values
         public IEnumerable<string> Get()
         {
-            var asd = _userService.GetAll().Select(x=>x.UserName);
+            var asd = _userService.GetAll().Select(x => x.UserName);
             return asd;
         }
 
@@ -35,6 +37,23 @@ namespace PhotoAlbum.WebApi.Controllers
         {
             return "5";
         }
+
+        [HttpGet]
+        [Authorize(Roles = RoleName.Admin)]
+        [Route("api/ForAdminOnly")]
+        public string ForAdminOnly()
+        {
+            return "Admin only";
+        }
+
+        [HttpGet]
+        [Authorize(Roles = AdminAndUser)]
+        [Route("api/ForUserOrAdmin")]
+        public string ForUserOrAdmin()
+        {
+            return "Admin only";
+        }
+
 
         // POST api/values
         public void Post([FromBody]string value)
