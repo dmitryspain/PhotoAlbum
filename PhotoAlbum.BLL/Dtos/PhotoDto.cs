@@ -7,13 +7,13 @@ using PhotoAlbum.BLL.Dtos.Base;
 
 namespace PhotoAlbum.BLL.Dtos
 {
-    public class PhotoDto : EntityDto<string>
+    public class PhotoDto : EntityDto<int>
     {
         public string ImagePath { get; set; }
         public string Description { get; set; }
         public DateTime? LastUpdate { get; set; }
         public DateTime? UploadedDate { get; set; }
-        public string GalleryId { get; set; }
+        public int? GalleryId { get; set; }
         public virtual GalleryDto Gallery { get; set; }
     }
 }

@@ -12,10 +12,11 @@ namespace PhotoAlbum.BLL.Dtos
         public string Description { get; set; }
         public DateTime? DateOfBirdth { get; set; }
 
-        public string GalleryId { get; set; }
-        public virtual GalleryDto Gallery { get; set; }
+        public virtual ICollection<PhotoDto> Photos { get; set; }
 
-        public string ApplicationUserId { get; set; }
-        public virtual UserDto ApplicationUser { get; set; }
+        public ClientProfileDto()
+        {
+            Photos = new List<PhotoDto>();
+        }
     }
 }
