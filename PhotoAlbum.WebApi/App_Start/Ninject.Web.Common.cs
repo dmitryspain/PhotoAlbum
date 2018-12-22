@@ -6,12 +6,15 @@ namespace PhotoAlbum.WebApi.App_Start
     using System;
     using System.Web;
     using System.Web.Http;
+    using Microsoft.Owin.Security.OAuth;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
     using Ninject.Web.WebApi;
+    using PhotoAlbum.BLL.Interfaces;
+    using PhotoAlbum.WebApi.Providers;
 
     public static class NinjectWebCommon 
     {
@@ -51,6 +54,9 @@ namespace PhotoAlbum.WebApi.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+                
+                var service = kernel.Get<IUserService>();
+                kernel.Bind<IOAuthAuthorizationServerProvider>().To<ApplicationOAuthProvider>().WithConstructorArgument(service);
                 RegisterServices(kernel);
                 return kernel;
             }
