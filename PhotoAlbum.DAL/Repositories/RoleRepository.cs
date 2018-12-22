@@ -5,49 +5,55 @@ using PhotoAlbum.DAL.EF;
 using PhotoAlbum.DAL.Interfaces.IRepository;
 using PhotoAlbum.DAL.Repositories.Base;
 using PhotoAlbum.DAL.Entities;
+using PhotoAlbum.DAL.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using PhotoAlbum.DAL.Entities.Identity;
 
 namespace PhotoAlbum.DAL.Repositories
 {
     public class RoleRepository : BaseRepository<ApplicationRole>, IRoleRepository
     {
+        private AppRoleManager _roleManager;
+
         public RoleRepository(PhotoAlbumContext context)
             : base(context)
         {
+            _roleManager = new AppRoleManager(new CustomRoleStore(context));
         }
 
-        public Task<IdentityResult> CreateAsync(ApplicationRole role)
+        public async Task<IdentityResult> CreateAsync(ApplicationRole role)
         {
-            throw new NotImplementedException();
+            return await _roleManager.CreateAsync(role);
         }
 
-        public Task<IdentityResult> DeleteAsync(ApplicationRole role)
+        public async Task<IdentityResult> DeleteAsync(ApplicationRole role)
         {
-            throw new NotImplementedException();
+            return await _roleManager.DeleteAsync(role);
         }
 
-        public Task<ApplicationRole> FindByIdAsync(string roleId)
+        public async Task<ApplicationRole> FindByIdAsync(int roleId)
         {
-            throw new NotImplementedException();
+            return await _roleManager.FindByIdAsync(roleId);
         }
 
         public ApplicationRole FindByName(string roleName)
         {
-            throw new NotImplementedException();
+            return _roleManager.FindByName(roleName);
         }
 
-        public Task<ApplicationRole> FindByNameAsync(string roleName)
+        public async Task<ApplicationRole> FindByNameAsync(string roleName)
         {
-            throw new NotImplementedException();
+            return await _roleManager.FindByNameAsync(roleName);
         }
 
         public bool RoleExists(string roleName)
         {
-            throw new NotImplementedException();
+            return _roleManager.RoleExists(roleName);
         }
 
-        public Task<bool> RoleExistsAsync(string roleName)
+        public async Task<bool> RoleExistsAsync(string roleName)
         {
-            throw new NotImplementedException();
+            return await _roleManager.RoleExistsAsync(roleName);
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using PhotoAlbum.DAL.EF.Models;
 using PhotoAlbum.DAL.Entities;
 
 namespace PhotoAlbum.DAL.Interfaces.IRepository
@@ -13,7 +12,7 @@ namespace PhotoAlbum.DAL.Interfaces.IRepository
     {
         ApplicationRole FindByName(string roleName);
         Task<ApplicationRole> FindByNameAsync(string roleName);
-        Task<ApplicationRole> FindByIdAsync(string roleId);
+        Task<ApplicationRole> FindByIdAsync(int roleId);
         Task<IdentityResult> CreateAsync(ApplicationRole role);
         Task<IdentityResult> DeleteAsync(ApplicationRole role);
         bool RoleExists(string roleName);

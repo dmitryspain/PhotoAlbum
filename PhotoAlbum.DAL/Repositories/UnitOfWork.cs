@@ -12,7 +12,8 @@ namespace PhotoAlbum.DAL.Repositories
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         public IPhotoRepository PhotoRepository { get; set; }
-        public IGalleryRepository GalleryRepository { get; set; }
+        public IClientProfilesRepository ClientProfilesRepository { get; set; }
+        //public IGalleryRepository GalleryRepository { get; set; }
 
         //public IUserRepository UserRepository { get; set; }
         //public IRoleRepository RoleRepository { get; set; }
@@ -20,13 +21,15 @@ namespace PhotoAlbum.DAL.Repositories
 
         public UnitOfWork( PhotoAlbumContext context, 
                                 IPhotoRepository photoRepository,
-                                IGalleryRepository galleryRepository, 
+                                //IGalleryRepository galleryRepository, 
+                                IClientProfilesRepository clientProfilesRepository,
                                 IUserRepository userRepository,
                                 IRoleRepository roleRepository)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            ClientProfilesRepository = clientProfilesRepository ?? throw new ArgumentNullException(nameof(clientProfilesRepository));
             PhotoRepository = photoRepository ?? throw new ArgumentNullException(nameof(photoRepository));
-            GalleryRepository = galleryRepository ?? throw new ArgumentNullException(nameof(galleryRepository));
+            //GalleryRepository = galleryRepository ?? throw new ArgumentNullException(nameof(galleryRepository));
             //UserRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             //RoleRepository = roleRepository ?? throw new ArgumentNullException(nameof(roleRepository));
         }
@@ -39,7 +42,7 @@ namespace PhotoAlbum.DAL.Repositories
         public void Dispose()
         {
             PhotoRepository?.Dispose();
-            GalleryRepository?.Dispose();
+            //GalleryRepository?.Dispose();
             //UserRepository?.Dispose();
             //RoleRepository?.Dispose();
             _context?.Dispose();

@@ -7,7 +7,7 @@ using PhotoAlbum.DAL.Entities;
 
 namespace PhotoAlbum.DAL.Interfaces.IRepository
 {
-    public interface IGalleryRepository : IRepository<Gallery>
+    public interface IClientProfilesRepository : IRepository<ClientProfile>
     {
     }
 }

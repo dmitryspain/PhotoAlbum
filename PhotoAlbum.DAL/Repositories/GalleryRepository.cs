@@ -1,5 +1,5 @@
 ﻿using PhotoAlbum.DAL.EF;
-using PhotoAlbum.DAL.EF.Models;
+using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Interfaces.IRepository;
 using PhotoAlbum.DAL.Repositories.Base;
 

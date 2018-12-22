@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Entities.Base;
 
-namespace PhotoAlbum.DAL.EF.Models
+namespace PhotoAlbum.DAL.Entities
 {
-    public class Gallery : Entity<string>
+    public class Gallery : Entity<int>
     {
         [Key, ForeignKey("ClientProfile")]
         public string ClientProfileId { get; set; }
