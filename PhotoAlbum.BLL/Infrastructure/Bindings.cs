@@ -17,9 +17,9 @@ namespace PhotoAlbum.BLL.Infrastructure
         {
             Bind<IPhotoService>().To<PhotoService>();
             Bind<IUserService>().To<UserService>();
-            Bind<IGalleryService>().To<GalleryService>();
+            //Bind<IGalleryService>().To<GalleryService>();
             Bind<IRoleService>().To<RoleService>();
-
+            Bind<IClientProfilesRepository>().To<ClientProfileRepository>();
             Bind<IRoleRepository>().To<RoleRepository>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IPhotoRepository>().To<PhotoRepository>();
