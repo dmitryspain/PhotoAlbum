@@ -78,9 +78,10 @@ namespace PhotoAlbum.BLL.Services
             _unitOfWork?.Dispose();
         }
 
-        public Task UploadPhoto(string path)
+        public void UploadPhoto(PhotoDto photoDto)
         {
-            throw new NotImplementedException();
+            var photo = _mapper.Map<Photo>(photoDto);
+            _unitOfWork.PhotoRepository.Create(photo);
         }
     }
 }
