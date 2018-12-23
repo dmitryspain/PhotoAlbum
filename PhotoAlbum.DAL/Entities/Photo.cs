@@ -11,17 +11,11 @@ namespace PhotoAlbum.DAL.Entities
 {
     public class Photo : Entity<int>
     {
-        public string ImagePath { get; set; }
+        public string ImageName { get; set; }
         public string Description { get; set; }
-        public DateTime? LastUpdate { get; set; }
         public DateTime? UploadedDate { get; set; }
 
-        //[ForeignKey("ClientProfile")]
         public int? ClientProfileId { get; set; }
-
-        //[Required]
         public ClientProfile ClientProfile { get; set; }
-        //public string GalleryId { get; set; }
-        //public virtual Gallery Gallery { get; set; }
     }
 }
