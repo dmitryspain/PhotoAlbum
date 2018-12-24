@@ -15,15 +15,10 @@ namespace PhotoAlbum.BLL.Infrastructure
 
         public override void Load()
         {
-            Bind<IPhotoService>().To<PhotoService>();
-            Bind<IUserService>().To<UserService>();
-            //Bind<IGalleryService>().To<GalleryService>();
-            Bind<IRoleService>().To<RoleService>();
             Bind<IClientProfilesRepository>().To<ClientProfileRepository>();
             Bind<IRoleRepository>().To<RoleRepository>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IPhotoRepository>().To<PhotoRepository>();
-            Bind<IGalleryRepository>().To<GalleryRepository>();
 
             Bind<IIdentityUnitOfWork>().To<IdentityUnitOfWork>();
             Bind<IUnitOfWork>().To<UnitOfWork>();
