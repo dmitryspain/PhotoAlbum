@@ -11,7 +11,7 @@ using PhotoAlbum.Constans;
 
 namespace PhotoAlbum.DAL.EF
 {
-    internal class PhotoAlbumInitializer : DropCreateDatabaseAlways<PhotoAlbumContext>
+    internal class PhotoAlbumInitializer : DropCreateDatabaseIfModelChanges<PhotoAlbumContext>
     {
         private void Method(PhotoAlbumContext context)
         {
@@ -24,18 +24,14 @@ namespace PhotoAlbum.DAL.EF
             if (!roleManager.RoleExists("Users"))
                 roleManager.Create(new ApplicationRole() { Name = "Users" });
 
-            var photo = new Photo()
-            {
-                Description = "testPhoto",
-            };
-            context.Photos.Add(photo);
+
+
             var clientProfile = new ClientProfile()
             {
                 DateOfBirdth = DateTime.Now,
-                Description = "testClient",
+                Description = "qwertyClient",
                 Photos = new List<Photo>(),
             };
-            clientProfile.Photos.Add(photo);
             context.ClientProfiles.Add(clientProfile);
 
             var user = userManager.FindByName("qwerty");
@@ -47,12 +43,6 @@ namespace PhotoAlbum.DAL.EF
                     Email = "qwerty@test.com",
                     ClientProfileId = clientProfile.Id,
                 }, "qwerty123");
-
-                //userManager.Create(new ApplicationUser()
-                //{
-                //    UserName = "PETYA",
-                //    Email = "PETYA@gmail.com",
-                //}, "123456");
 
                 user = userManager.FindByName("qwerty");
             };
