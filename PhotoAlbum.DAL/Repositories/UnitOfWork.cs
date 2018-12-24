@@ -13,25 +13,15 @@ namespace PhotoAlbum.DAL.Repositories
     {
         public IPhotoRepository PhotoRepository { get; set; }
         public IClientProfilesRepository ClientProfilesRepository { get; set; }
-        //public IGalleryRepository GalleryRepository { get; set; }
-
-        //public IUserRepository UserRepository { get; set; }
-        //public IRoleRepository RoleRepository { get; set; }
         private readonly PhotoAlbumContext _context;
 
         public UnitOfWork( PhotoAlbumContext context, 
                                 IPhotoRepository photoRepository,
-                                //IGalleryRepository galleryRepository, 
-                                IClientProfilesRepository clientProfilesRepository,
-                                IUserRepository userRepository,
-                                IRoleRepository roleRepository)
+                                IClientProfilesRepository clientProfilesRepository)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             ClientProfilesRepository = clientProfilesRepository ?? throw new ArgumentNullException(nameof(clientProfilesRepository));
             PhotoRepository = photoRepository ?? throw new ArgumentNullException(nameof(photoRepository));
-            //GalleryRepository = galleryRepository ?? throw new ArgumentNullException(nameof(galleryRepository));
-            //UserRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            //RoleRepository = roleRepository ?? throw new ArgumentNullException(nameof(roleRepository));
         }
 
         public async Task SaveAsync()
@@ -42,9 +32,6 @@ namespace PhotoAlbum.DAL.Repositories
         public void Dispose()
         {
             PhotoRepository?.Dispose();
-            //GalleryRepository?.Dispose();
-            //UserRepository?.Dispose();
-            //RoleRepository?.Dispose();
             _context?.Dispose();
         }
     }

@@ -6,9 +6,6 @@ namespace PhotoAlbum.DAL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        //IGalleryRepository GalleryRepository { get; set; }
-        //IRoleRepository RoleRepository { get; set; }
-        //IUserRepository UserRepository { get; set; }
         IPhotoRepository PhotoRepository { get; set; }
         IClientProfilesRepository ClientProfilesRepository { get; set; }
         Task SaveAsync();
