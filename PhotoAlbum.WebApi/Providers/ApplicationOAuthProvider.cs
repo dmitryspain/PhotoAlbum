@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -33,27 +35,29 @@ namespace PhotoAlbum.WebApi.Providers
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var user = await _userService.FindAsync(context.UserName, context.Password);
-            if (user == null)  await Task.FromResult<object>(null);
 
-            var oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
-            var roles = await _userService.GetRolesAsync(user.Id);
-            oAuthIdentity.AddClaim(new Claim("Name", user.UserName));
-            oAuthIdentity.AddClaim(new Claim("Email", user.Email));
-            foreach(var role in roles)
+            if (user != null)
             {
-                oAuthIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
+                var oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
+                var roles = await _userService.GetRolesAsync(user.Id);
+                oAuthIdentity.AddClaim(new Claim("Name", user.UserName));
+                oAuthIdentity.AddClaim(new Claim("Email", user.Email));
+                foreach(var role in roles)
+                {
+                    oAuthIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
+                }
+
+                var additionalData = new AuthenticationProperties(new Dictionary<string, string>
+                {
+                    {
+                        "role", Newtonsoft.Json.JsonConvert.SerializeObject(roles)
+                    }
+                });
+
+                var ticket = new AuthenticationTicket(oAuthIdentity, additionalData);
+                context.Validated(ticket);
             }
 
-            var additionalData = new AuthenticationProperties(new Dictionary<string, string>
-            {
-                {
-                    "role", Newtonsoft.Json.JsonConvert.SerializeObject(roles)
-                }
-            });
-
-
-            var ticket = new AuthenticationTicket(oAuthIdentity, additionalData);
-            context.Validated(ticket);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
