@@ -65,17 +65,14 @@
   <ItemGroup>
     <Compile Include="Dtos\Base\EntityDto.cs" />
     <Compile Include="Dtos\ClientProfileDto.cs" />
-    <Compile Include="Dtos\GalleryDto.cs" />
     <Compile Include="Dtos\PhotoDto.cs" />
     <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Infrastructure\Bindings.cs" />
-    <Compile Include="Interfaces\IGalleryService.cs" />
     <Compile Include="Interfaces\IPhotoService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\GalleryService.cs" />
     <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\UserService.cs" />
