@@ -47,7 +47,7 @@ namespace PhotoAlbum.BLL.Services
             //if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(role))
                 //return IdentityResult.Failed("userId or role can't be null or empty");
 
-            var user = _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
+            var user = await _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
 
             if (!await _identityUnitOfWork.RoleRepository.RoleExistsAsync(role))
                 return IdentityResult.Failed("This role isn't exists");
@@ -65,20 +65,14 @@ namespace PhotoAlbum.BLL.Services
             }
 
             newUser = new ApplicationUser { Email = userDto.Email, UserName = userDto.UserName };
+
             var clientProfile = new ClientProfile
             {
-                Description = "UserServiceClient"
+                Description = $"{newUser.UserName} account"
             };
-            var photo = new Photo
-            {
-                Description = "UserServiceClientPhoto[Test]"
-            };
-
             _unitOfWork.ClientProfilesRepository.Create(clientProfile);
-            photo.ClientProfileId = clientProfile.Id;
-            _unitOfWork.PhotoRepository.Create(photo);
-
             newUser.ClientProfileId = clientProfile.Id;
+
             var result =  await _identityUnitOfWork.UserRepository.CreateAsync(newUser, password);
 
             if(result.Errors?.Count() > 0)
@@ -169,60 +163,14 @@ namespace PhotoAlbum.BLL.Services
         {
             return await _identityUnitOfWork.UserRepository.GetRolesAsync(userId);
         }
+
+        public async Task<UserDto> FindByNameAsync(string userName)
+        {
+            var user = await _identityUnitOfWork.UserRepository.FindByNameAsync(userName);
+            return _mapper.Map<UserDto>(user);
+        }
     }
 
 
-    //public class UserService : IUserService
-    //{
-    //    private IUnitOfWork _unitOfWork;
-    //    private IMapper _mapper;
-
-    //    public UserService(IUnitOfWork unitOfWork)
-    //    {
-    //        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-
-    //        _mapper = new Mapper(new MapperConfiguration(cfg => {
-    //            cfg.CreateMap<ApplicationUser, UserDto>();
-    //        }));
-    //    }
-
-    //    public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
-    //    {
-    //        var users = await _unitOfWork.UserRepository.GetAllAsync();
-    //        return  _mapper.Map<IEnumerable<UserDto>>(users ?? 
-    //            throw new ArgumentNullException(nameof(users)));
-
-    //    }
-
-    //    public async Task<IEnumerable<UserDto>> GetAllUsersAsync(Expression<Func<UserDto, bool>> expression)
-    //    {
-    //        var expr = _mapper.Map<Expression<Func<ApplicationUser, bool>>>(expression);
-    //        var users = await _unitOfWork.UserRepository.GetAllAsync(expr);
-
-    //        return _mapper.Map<IEnumerable<UserDto>>(users ??
-    //            throw new ArgumentNullException(nameof(users)));
-    //    }
-
-    //    public IEnumerable<UserDto> GetAllUsers()
-    //    {
-    //        var users = _unitOfWork.UserRepository.GetAll();
-    //        return _mapper.Map<IEnumerable<UserDto>>(users ??
-    //            throw new ArgumentNullException(nameof(users)));
-    //    }
-
-
-    //    public async Task<UserDto> GetSingleAsync(Expression<Func<UserDto, bool>> expression)
-    //    {
-    //        var expr = _mapper.Map<Expression<Func<ApplicationUser, bool>>>(expression);
-    //        var user = await _unitOfWork.UserRepository.GetSingleAsync(expr);
-
-    //        return _mapper.Map<UserDto>(user ??
-    //            throw new ArgumentNullException(nameof(user)));
-    //    }
-
-    //    public void Dispose()
-    //    {
-    //        _unitOfWork?.Dispose();
-    //    }
-    //}
+    
 }

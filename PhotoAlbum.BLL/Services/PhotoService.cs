@@ -22,7 +22,9 @@ namespace PhotoAlbum.BLL.Services
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
 
             _mapper = new Mapper(new MapperConfiguration(cfg => {
-                cfg.CreateMap<Photo, PhotoDto>();
+                cfg.CreateMap<PhotoDto, Photo>()
+                .ForMember(x => x.ClientProfile, opt => opt.Ignore())
+                .ForMember(x => x.ClientProfileId, opt => opt.MapFrom(x => x.ClientProfileDtoId));
             }));
         }
 
@@ -81,6 +83,15 @@ namespace PhotoAlbum.BLL.Services
         public void UploadPhoto(PhotoDto photoDto)
         {
             var photo = _mapper.Map<Photo>(photoDto);
+            //Photo photo = new Photo()
+            //{
+            //    ClientProfileId = photoDto.ClientProfileDtoId,
+            //    ContentType = photoDto.ContentType,
+            //    Data = photoDto.Data,
+            //    Description = photoDto.Description,
+            //    ImageName = photoDto.ImageName,
+            //    //UploadedDate = 
+            //};
             _unitOfWork.PhotoRepository.Create(photo);
         }
     }
