@@ -13,6 +13,7 @@ namespace PhotoAlbum.BLL.Interfaces
     public interface IUserService : IDisposable
     {
         Task<UserDto> FindAsync(string userName, string password);
+        Task<UserDto> FindByNameAsync(string userName);
         Task<UserDto> FindByIdAsync(int userId);
         Task<ClaimsIdentity> CreateIdentityAsync(UserDto user, string authenticationType);
         Task<IdentityResult> CreateAsync(UserDto userDto, string password);
