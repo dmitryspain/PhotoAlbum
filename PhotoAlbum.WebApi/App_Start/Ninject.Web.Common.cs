@@ -14,6 +14,7 @@ namespace PhotoAlbum.WebApi.App_Start
     using Ninject.Web.Common.WebHost;
     using Ninject.Web.WebApi;
     using PhotoAlbum.BLL.Interfaces;
+    using PhotoAlbum.BLL.Services;
     using PhotoAlbum.WebApi.Providers;
 
     public static class NinjectWebCommon 
@@ -47,22 +48,22 @@ namespace PhotoAlbum.WebApi.App_Start
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
+        /// 
+        public static IKernel Kernel { get; private set; }
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel(new BLL.Infrastructure.Bindings("PhotoAlbum"));
+            Kernel = new StandardKernel(new BLL.Infrastructure.Bindings("PhotoAlbum"));
             try
             {
-                kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
-                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-                
-                var service = kernel.Get<IUserService>();
-                kernel.Bind<IOAuthAuthorizationServerProvider>().To<ApplicationOAuthProvider>().WithConstructorArgument(service);
-                RegisterServices(kernel);
-                return kernel;
+                Kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+                Kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+                RegisterServices(Kernel);
+                return Kernel;
             }
             catch
             {
-                kernel.Dispose();
+                Kernel.Dispose();
                 throw;
             }
         }
@@ -73,6 +74,9 @@ namespace PhotoAlbum.WebApi.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IPhotoService>().To<PhotoService>();
+            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IRoleService>().To<RoleService>();
         }        
     }
 }

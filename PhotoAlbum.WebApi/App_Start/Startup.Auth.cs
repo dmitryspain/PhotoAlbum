@@ -13,48 +13,25 @@ using PhotoAlbum.WebApi.Models;
 using System.Web.Configuration;
 using PhotoAlbum.BLL.Interfaces;
 using Ninject;
+using PhotoAlbum.WebApi.App_Start;
 // MUST BE DELETED
 
 namespace PhotoAlbum.WebApi
 {
     public partial class Startup
     {
-        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
-
-        private IUserService _userService;
-
         [Inject]
-        public IUserService UserService
-        {
-            get { return _userService; }
-            set { _userService = value; }
-        }
+        public IUserService UserService { get; set; }
+        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
         public Startup()
         {
-            var kernel = new StandardKernel(new BLL.Infrastructure.Bindings("PhotoAlbum"));
+            var kernel = NinjectWebCommon.Kernel;
             kernel.Inject(this);
         }
-    
 
-        public static string PublicClientId { get; private set; }
-
-        // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            //_userService = userService;
-            //// Configure the db context and user manager to use a single instance per request
-            //// todo: SERVICE DB CONTEXT
-            //app.CreatePerOwinContext(PhotoAlbumContext.Create);
-            //app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-
-            //// Enable the application to use a cookie to store information for the signed in user
-            //// and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions());
-            //app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
-            // Configure the application for OAuth based flow
-            PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
@@ -63,8 +40,6 @@ namespace PhotoAlbum.WebApi
                 AllowInsecureHttp = true,
             };
 
-
-            // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
         }
     }
