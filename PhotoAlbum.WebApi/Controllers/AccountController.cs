@@ -346,43 +346,6 @@ namespace PhotoAlbum.WebApi.Controllers
 
 
 
-        // POST api/Account/Register
-        //[AllowAnonymous]
-        //[Route("Register")]
-        //public async Task<IdentityResult> Register(RegisterBindingModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return IdentityResult.Failed("Model isn't valid"); //BadRequest(ModelState);
-        //    }
-
-        //    var userDto = new UserDto() { UserName = model.UserName, Email = model.Email };
-        //    userDto.ClientProfile = new ClientProfileDto();
-
-
-
-
-
-        //    IdentityResult result;
-        //    try
-        //    {
-
-        //     result = await _userService.CreateAsync(userDto, model.Password);
-        //    }
-        //    catch(Exception ex)
-        //    {
-
-        //    }
-
-        //    if (!result.Succeeded)
-        //    {
-        //        return IdentityResult.Failed(result.Errors.FirstOrDefault());// GetErrorResult(result);
-        //    }
-
-        //    var identityResult = await _userService.AddToRoleAsync(userDto.Id, "Users");
-
-        //    return null;//result;
-        //}
 
         [AllowAnonymous]
         [Route("Register")]
@@ -394,14 +357,6 @@ namespace PhotoAlbum.WebApi.Controllers
             }
 
             UserDto user = new UserDto() { UserName = model.UserName, Email = model.Email };
-            //try
-            //{
-            //    await _userService.CreateAsync(user, model.Password);
-            //}
-            //catch(Exception ex)
-            //{
-
-            //}
 
             IdentityResult result = await _userService.CreateAsync(user, model.Password);
 
@@ -413,25 +368,7 @@ namespace PhotoAlbum.WebApi.Controllers
             return result;
         }
 
-        //public async Task<IdentityResult> Register(RegisterBindingModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return IdentityResult.Failed("Model isn't valid"); //BadRequest(ModelState);
-        //    }
-
-        //    var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-        //    IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-        //    if (!result.Succeeded)
-        //    {
-        //        return IdentityResult.Failed(result.Errors.FirstOrDefault());// GetErrorResult(result);
-        //    }
-
-        //    return result;
-        //}
-
+      
         // POST api/Account/RegisterExternal
         //[OverrideAuthentication]
         //[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
