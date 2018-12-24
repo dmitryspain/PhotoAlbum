@@ -76,7 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Base\Entity.cs" />
-    <Compile Include="Entities\Gallery.cs" />
     <Compile Include="Entities\Identity\IdentityModels.cs" />
     <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
@@ -89,13 +88,11 @@
     <Compile Include="Interfaces\IIdentityUnitOfWork.cs" />
     <Compile Include="Interfaces\IRepository\IClientProfilesRepository.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
-    <Compile Include="Interfaces\IRepository\IGalleryRepository.cs" />
     <Compile Include="Interfaces\IRepository\IPhotoRepository.cs" />
     <Compile Include="Interfaces\IRepository\IRepository.cs" />
     <Compile Include="Interfaces\IRepository\IRoleRepository.cs" />
     <Compile Include="Interfaces\IRepository\IUserRepository.cs" />
     <Compile Include="Repositories\ClientProfileRepisotory.cs" />
-    <Compile Include="Repositories\GalleryRepository.cs" />
     <Compile Include="Repositories\IdentityUnitOfWork.cs" />
     <Compile Include="Repositories\PhotoRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
