@@ -11,11 +11,7 @@ namespace PhotoAlbum.DAL.Entities
     {
         public string Description { get; set; }
         public DateTime? DateOfBirdth { get; set; }
-
-        public virtual ICollection<Photo> Photos { get; set; }
-        public ClientProfile()
-        {
-            Photos = new List<Photo>();
-        }
+        public virtual byte[] Avatar { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
     }
 }

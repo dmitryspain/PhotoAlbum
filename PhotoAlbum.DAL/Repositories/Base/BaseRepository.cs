@@ -36,6 +36,7 @@ namespace PhotoAlbum.DAL.Repositories.Base
         public void Update(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate)
@@ -53,7 +54,7 @@ namespace PhotoAlbum.DAL.Repositories.Base
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(int? id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }

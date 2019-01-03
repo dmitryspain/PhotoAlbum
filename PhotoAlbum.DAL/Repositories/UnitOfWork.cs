@@ -14,7 +14,6 @@ namespace PhotoAlbum.DAL.Repositories
         public IPhotoRepository PhotoRepository { get; set; }
         public IClientProfilesRepository ClientProfilesRepository { get; set; }
         private readonly PhotoAlbumContext _context;
-
         public UnitOfWork( PhotoAlbumContext context, 
                                 IPhotoRepository photoRepository,
                                 IClientProfilesRepository clientProfilesRepository)
