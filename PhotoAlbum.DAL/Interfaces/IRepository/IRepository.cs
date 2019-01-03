@@ -15,7 +15,7 @@ namespace PhotoAlbum.DAL.Interfaces.IRepository
         T GetSingle(Expression<Func<T, bool>> predicate);
 
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int? id);
+        Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
         Task<T> GetSingleAsync(Expression<Func<T, bool>> predicate);
 
