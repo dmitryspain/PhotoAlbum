@@ -77,6 +77,7 @@ namespace PhotoAlbum.WebApi.App_Start
             kernel.Bind<IPhotoService>().To<PhotoService>();
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IRoleService>().To<RoleService>();
+            kernel.Bind<IClientProfileService>().To<ClientProfileService>();
         }        
     }
 }
