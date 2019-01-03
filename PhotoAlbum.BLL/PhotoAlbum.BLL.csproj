@@ -69,10 +69,12 @@
     <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Infrastructure\Bindings.cs" />
+    <Compile Include="Interfaces\IClientProfileService.cs" />
     <Compile Include="Interfaces\IPhotoService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ClientProfileService.cs" />
     <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\UserService.cs" />
