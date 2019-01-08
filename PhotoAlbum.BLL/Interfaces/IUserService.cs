@@ -24,6 +24,5 @@ namespace PhotoAlbum.BLL.Interfaces
         Task<List<UserDto>> GetAllAsync();
         List<UserDto> GetAll();
         Task<IList<string>> GetRolesAsync(int userId);
-        IQueryable<UserDto> Users { get; }
     }
 }

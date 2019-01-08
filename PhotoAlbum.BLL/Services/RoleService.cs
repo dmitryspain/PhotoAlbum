@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -28,16 +29,6 @@ namespace PhotoAlbum.BLL.Services
             }));
         }
 
-        public IQueryable<RoleDto> Roles
-        {
-            get
-            {
-                throw new NotImplementedException();
-                //var roles = _unitOfWork.RoleRepository.getq
-                //return _mapper.Map<IQueryable<RoleDto>>(roles);
-            }
-        }
-
         public async Task<IdentityResult> CreateAsync(string roleName)
         {
             if (string.IsNullOrEmpty(roleName)) throw new ArgumentNullException(nameof(roleName));
@@ -46,13 +37,21 @@ namespace PhotoAlbum.BLL.Services
             if (role != null)
                 return IdentityResult.Failed("This roles already exists");
 
-            return await _unitOfWork.RoleRepository.CreateAsync(new ApplicationRole(roleName));
+            try
+            {
+
+                await _unitOfWork.RoleRepository.CreateAsync(new ApplicationRole(roleName));
+            }
+            catch(DbUpdateException ex)
+            {
+                throw new ArgumentException("Role isn't created!" + ex.Message, ex.InnerException);
+            }
+
+            return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> DeleteAsync(int roleId)
         {
-            //if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
-
             var role = await _unitOfWork.RoleRepository.FindByIdAsync(roleId);
             return await _unitOfWork.RoleRepository.DeleteAsync(role);
         }
@@ -64,10 +63,9 @@ namespace PhotoAlbum.BLL.Services
 
         public async Task<RoleDto> FindByIdAsync(int roleId)
         {
-            //if (string.IsNullOrEmpty(roleId)) throw new ArgumentNullException(nameof(roleId));
             var role = await _unitOfWork.RoleRepository.FindByIdAsync(roleId);
 
-            return _mapper.Map<RoleDto>(role);
+            return _mapper.Map<RoleDto>(role ?? throw new ar);
             
         }
 

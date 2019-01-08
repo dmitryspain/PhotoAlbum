@@ -10,7 +10,7 @@ namespace PhotoAlbum.BLL.Interfaces
     public interface IClientProfileService
     {
         Task SetAvatar(int clientProfileId, PhotoDto avatar);
-        Task<ClientProfileDto> GetProfileData(UserDto clientProfileId); // change naming
+        Task<ClientProfileDto> GetProfileData(int userId); 
         Task<ClientProfileDto> FindByIdAsync(int clientProfileId);
     }
 }

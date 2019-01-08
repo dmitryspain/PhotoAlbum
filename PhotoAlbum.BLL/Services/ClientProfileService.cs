@@ -28,7 +28,6 @@ namespace PhotoAlbum.BLL.Services
                 ForMember(x=> x.Avatar, opt => opt.MapFrom(x => Convert.ToBase64String(x.Avatar)));
                 cfg.CreateMap<Photo, PhotoDto>()
                 .ForMember(x => x.Data, opt => opt.MapFrom(x => Convert.ToBase64String(x.Data)));
-
             }));
         }
 
@@ -38,24 +37,13 @@ namespace PhotoAlbum.BLL.Services
             clientProfile.Avatar = Convert.FromBase64String(avatar.Data);
 
             _unitOfWork.ClientProfilesRepository.Update(clientProfile);
-            Debug.WriteLine("AvatarLength = " + clientProfile.Avatar.Length);
         }
 
-        public async Task<ClientProfileDto> GetProfileData(UserDto userDto)
+        public async Task<ClientProfileDto> GetProfileData(int userId)
         {
-            try
-            {
-                //var user = await _identityUnitOfWork.UserRepository.FindAsync("qwerty", "qwerty123");
-                var user = _identityUnitOfWork.UserRepository.GetById(userDto.Id);
-                var clientProfile = user.ClientProfile;//await _unitOfWork.ClientProfilesRepository.GetByIdAsync(clientProfileId);
-                return _mapper.Map<ClientProfileDto>(clientProfile);
-
-            }
-            catch(Exception ex)
-            {
-
-            }
-            return null;
+            var user = await _identityUnitOfWork.UserRepository.GetByIdAsync(userId);
+            var clientProfile = user.ClientProfile;
+            return _mapper.Map<ClientProfileDto>(clientProfile);
         }
 
         public async Task<ClientProfileDto> FindByIdAsync(int clientProfileId)

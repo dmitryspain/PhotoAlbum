@@ -13,9 +13,10 @@ namespace PhotoAlbum.BLL.Interfaces
         void UploadPhoto(PhotoDto photo);
         Task<IEnumerable<PhotoDto>> GetAllPhotosAsync();
         IEnumerable<PhotoDto> GetAllPhotos();
+        void RemovePhoto(int photoId);
         Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(int userId);
         Task<IEnumerable<PhotoDto>> GetAllPhotosAsync(Expression<Func<PhotoDto, bool>> expression);
-        Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(Expression<Func<UserDto, bool>> expression);
         Task<PhotoDto> GetSingleAsync(Expression<Func<PhotoDto, bool>> expression);
+        Task<PhotoDto> GetPhotoByIdAsync(int photoId);
     }
 }

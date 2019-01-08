@@ -33,20 +33,8 @@ namespace PhotoAlbum.BLL.Services
             }));
         }
 
-        public IQueryable<UserDto> Users
-        {
-            get
-            {
-                var users = _identityUnitOfWork.UserRepository.GetAll();
-                return _mapper.Map<IQueryable<UserDto>>(users);
-            }
-        }
-
         public async Task<IdentityResult> AddToRoleAsync(int userId, string role)
         {
-            //if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(role))
-                //return IdentityResult.Failed("userId or role can't be null or empty");
-
             var user = await _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
 
             if (!await _identityUnitOfWork.RoleRepository.RoleExistsAsync(role))
@@ -68,7 +56,7 @@ namespace PhotoAlbum.BLL.Services
 
             var clientProfile = new ClientProfile
             {
-                Description = $"{newUser.UserName} account"
+                Description = $"I am {newUser.UserName}, hello world!"
             };
             _unitOfWork.ClientProfilesRepository.Create(clientProfile);
             newUser.ClientProfileId = clientProfile.Id;
@@ -95,7 +83,6 @@ namespace PhotoAlbum.BLL.Services
         {
             if (string.IsNullOrEmpty(authenticationType)) throw new ArgumentNullException(nameof(authenticationType));
 
-            //var appUser = await _identityUnitOfWork.UserRepository.FindByIdAsync(user.Id ?? throw new ArgumentNullException(nameof(user)));
             var appUser = await _identityUnitOfWork.UserRepository.FindByIdAsync(user.Id);
             if (appUser == null) return null;
 
@@ -139,8 +126,8 @@ namespace PhotoAlbum.BLL.Services
 
         public async Task<IdentityResult> RemoveFromRoleAsync(int userId, string role)
         {
-            //if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(role))
-            //    return IdentityResult.Failed("One of parametrs was empty or null");
+            if (string.IsNullOrEmpty(role))
+                return IdentityResult.Failed("Role can't be null or empty");
 
             var user = _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
 
@@ -150,13 +137,32 @@ namespace PhotoAlbum.BLL.Services
             if (!await _identityUnitOfWork.RoleRepository.RoleExistsAsync(role))
                 return IdentityResult.Failed("Role isn't exists");
 
-            return await _identityUnitOfWork.UserRepository.RemoveFromRoleAsync(userId, role);
+            try
+            {
+                await _identityUnitOfWork.UserRepository.RemoveFromRoleAsync(userId, role);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException("Couldn't delete user!" + ex.Message, ex.InnerException);
+            }
+
+            return IdentityResult.Success;
         }
 
         public async Task<IdentityResult> UpdateAsync(UserDto user)
         {
             var appUser = _mapper.Map<ApplicationUser>(user ?? throw new ArgumentNullException(nameof(user)));
-            return await _identityUnitOfWork.UserRepository.UpdateAsync(appUser);
+
+            try
+            {
+                await _identityUnitOfWork.UserRepository.UpdateAsync(appUser);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ArgumentException("Couldn't update user!" + ex.Message, ex.InnerException);
+            }
+
+            return IdentityResult.Success;
         }
 
         public async Task<IList<string>> GetRolesAsync(int userId)
@@ -166,6 +172,9 @@ namespace PhotoAlbum.BLL.Services
 
         public async Task<UserDto> FindByNameAsync(string userName)
         {
+            if (string.IsNullOrEmpty(userName))
+                throw new ArgumentException("UserId or role can't be a null or empty");
+
             var user = await _identityUnitOfWork.UserRepository.FindByNameAsync(userName);
             return _mapper.Map<UserDto>(user);
         }

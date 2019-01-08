@@ -14,7 +14,6 @@ namespace PhotoAlbum.BLL.Dtos
         public string Description { get; set; }
         public string ContentType { get; set; }
         public string Data { get; set; }
-        //public byte[] Data { get; set; }
         public DateTime? UploadedDate { get; set; }
     }
 }
