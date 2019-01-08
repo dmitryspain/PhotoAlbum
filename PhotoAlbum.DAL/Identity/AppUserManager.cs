@@ -38,17 +38,7 @@ namespace PhotoAlbum.DAL.Identity
                 //RequireLowercase = true,
                 //RequireUppercase = true,
             };
-            //manager.RegisterTwoFactorProvider("PhoneCode", new PhoneNumberTokenProvider<ApplicationUser, int>
-            //{
-            //    MessageFormat = "Your security code is: {0}"
-            //});
-            //manager.RegisterTwoFactorProvider("EmailCode", new EmailTokenProvider<ApplicationUser, int>
-            //{
-            //    Subject = "Security Code",
-            //    BodyFormat = "Your security code is: {0}"
-            //});
-            //manager.EmailService = new EmailService();
-            //manager.SmsService = new SmsService();
+
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
