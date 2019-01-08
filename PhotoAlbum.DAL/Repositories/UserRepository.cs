@@ -34,9 +34,6 @@ namespace PhotoAlbum.DAL.Repositories
 
         public async Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
         {
-            //var gallery = new Gallery();
-            //gallery.ClientProfile = user.ClientProfile;
-
             return await _userManager.CreateAsync(user, password);
         }
 
