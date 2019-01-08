@@ -17,10 +17,10 @@ namespace PhotoAlbum.WebApi.Controllers
 {
     public class ClientProfileController : ApiController
     {
-        private IClientProfileService _clientProfileService;
-        private IUserService _userService;
-        private IPhotoService _photoService;
-        private IMapper _mapper;
+        private readonly IClientProfileService _clientProfileService;
+        private readonly IPhotoService _photoService;
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
         public ClientProfileController(IClientProfileService clientProfileService, IUserService userService, IPhotoService photoService)
         {
@@ -99,9 +99,6 @@ namespace PhotoAlbum.WebApi.Controllers
                 imageData = binaryReader.ReadBytes(postedFile.ContentLength);
             }
 
-            var test = User.Identity.Name;
-            var test2 = RequestContext.Principal.Identity.Name;
-
             var userName = httpRequest["UserName"];
             var user = await _userService.FindByNameAsync(userName);
 
@@ -117,6 +114,24 @@ namespace PhotoAlbum.WebApi.Controllers
 
             _photoService.UploadPhoto(photo);
             return Request.CreateResponse(HttpStatusCode.Created);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = RoleName.User)]
+        [Route("api/GetPhoto/{photoId}")]
+        public async Task<IHttpActionResult> GetPhoto(int photoId)
+        {
+            var photo = await _photoService.GetPhotoByIdAsync(photoId);
+            return Ok(photo);
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = RoleName.User)]
+        [Route("api/RemovePhoto/{photoId}")]
+        public async Task<IHttpActionResult> RemovePhoto(int photoId)
+        {
+            _photoService.RemovePhoto(photoId);
+            return Ok(HttpStatusCode.OK);
         }
     }
 }
