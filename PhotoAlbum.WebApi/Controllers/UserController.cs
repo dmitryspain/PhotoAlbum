@@ -9,16 +9,10 @@ using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.BLL.Services;
 using PhotoAlbum.Constans;
+using PhotoAlbum.WebApi.Models.ViewModels;
 
 namespace PhotoAlbum.WebApi.Controllers
 {
-    //[Authorize]
-    public class UserViewModel
-    {
-        public string UserName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
 
     public class UserController : ApiController
     {
@@ -46,7 +40,6 @@ namespace PhotoAlbum.WebApi.Controllers
                 {
                     UserName = user.UserName,
                     Email = user.Email,
-                    //Password = user.Password
                 });
             }
             return Ok(usersViewModel);
