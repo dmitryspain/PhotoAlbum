@@ -7,6 +7,7 @@ namespace PhotoAlbum.WebApi.Models.ViewModels
 {
     public class PhotoViewModel
     {
+        public int Id { get; set; }
         public string ImageName { get; set; }
         public string Description { get; set; }
         public string Data { get; set; }
