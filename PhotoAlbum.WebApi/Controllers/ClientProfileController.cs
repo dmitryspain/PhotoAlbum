@@ -40,10 +40,23 @@ namespace PhotoAlbum.WebApi.Controllers
         public async Task<IHttpActionResult> GetProfileData(string userName)
         {
             var user = await _userService.FindByNameAsync(userName);
-            var profileDto = await _clientProfileService.GetProfileData(user);
+            var profileDto = await _clientProfileService.GetProfileData(user.Id);
             var profile = _mapper.Map<ClientProfileViewModel>(profileDto);
 
             return Ok(profile);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = RoleName.User)]
+        [Route("api/IsUserHavePhoto/{userName}/{photoId}")]
+        public async Task<IHttpActionResult> IsUserHavePhoto(string userName, int photoId)
+        {
+            var user = await _userService.FindByNameAsync(userName);
+            var photoDto = await _photoService.GetPhotoByIdAsync(photoId);
+            var photos = await _photoService.GetUserPhotosAsync(user.Id);
+            bool isContains = photos.FirstOrDefault(x => x.Id == photoDto.Id) != null;
+
+            return Ok(isContains);
         }
 
         [HttpPost]
