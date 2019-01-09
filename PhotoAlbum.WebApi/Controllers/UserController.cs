@@ -17,8 +17,8 @@ namespace PhotoAlbum.WebApi.Controllers
     public class UserController : ApiController
     {
         private const string AdminAndUser = "Administrators,Users";
-        private IUserService _userService;
-        private IRoleService _roleService;
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
         public UserController(IUserService userService, IRoleService roleService)
         {

@@ -26,6 +26,5 @@ namespace PhotoAlbum.WebApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, roles);
         }
 
-
     }
 }
