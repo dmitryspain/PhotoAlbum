@@ -65,7 +65,7 @@ namespace PhotoAlbum.BLL.Services
         {
             var role = await _unitOfWork.RoleRepository.FindByIdAsync(roleId);
 
-            return _mapper.Map<RoleDto>(role ?? throw new ar);
+            return _mapper.Map<RoleDto>(role ?? throw new ArgumentException("No role with that id"));
             
         }
 

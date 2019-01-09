@@ -25,7 +25,7 @@ namespace PhotoAlbum.BLL.Services
 
             _mapper = new Mapper(new MapperConfiguration(cfg => {
                 cfg.CreateMap<Photo, PhotoDto>()
-                .ForMember(x => x.ClientProfileDtoId, opt => opt.MapFrom(x => x.Id))
+                .ForMember(x => x.ClientProfileDtoId, opt => opt.MapFrom(x => x.ClientProfileId))
                 .ForMember(x => x.Data, opt=> opt.MapFrom(x => Convert.ToBase64String(x.Data)));
             }));
         }
