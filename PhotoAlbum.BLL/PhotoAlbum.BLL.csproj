@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Dtos\Base\EntityDto.cs" />
     <Compile Include="Dtos\ClientProfileDto.cs" />
+    <Compile Include="Dtos\LikeDto.cs" />
     <Compile Include="Dtos\PhotoDto.cs" />
     <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />

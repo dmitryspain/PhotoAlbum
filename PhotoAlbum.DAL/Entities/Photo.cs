@@ -16,7 +16,7 @@ namespace PhotoAlbum.DAL.Entities
         public string ContentType { get; set; }
         public byte[] Data { get; set; }
         public DateTime? UploadedDate { get; set; }
-
+        public virtual List<Like> Likes { get; set; } = new List<Like>();
         public int ClientProfileId { get; set; }
         public ClientProfile ClientProfile { get; set; }
     }

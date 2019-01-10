@@ -24,8 +24,6 @@ namespace PhotoAlbum.DAL.EF
             if (!roleManager.RoleExists("Users"))
                 roleManager.Create(new ApplicationRole() { Name = "Users" });
 
-
-
             var clientProfile = new ClientProfile()
             {
                 DateOfBirdth = DateTime.Now,

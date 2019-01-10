@@ -28,6 +28,8 @@ namespace PhotoAlbum.BLL.Services
                 ForMember(x=> x.Avatar, opt => opt.MapFrom(x => Convert.ToBase64String(x.Avatar)));
                 cfg.CreateMap<Photo, PhotoDto>()
                 .ForMember(x => x.Data, opt => opt.MapFrom(x => Convert.ToBase64String(x.Data)));
+                cfg.CreateMap<Like, LikeDto>()
+                .ForMember(x => x.PhotoDtoId, opt => opt.MapFrom(x => x.PhotoId));
             }));
         }
 

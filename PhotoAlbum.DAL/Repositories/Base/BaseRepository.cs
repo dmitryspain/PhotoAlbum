@@ -35,8 +35,16 @@ namespace PhotoAlbum.DAL.Repositories.Base
 
         public void Update(T item)
         {
+            try
+            {
+
             _context.Entry(item).State = EntityState.Modified;
             _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate)

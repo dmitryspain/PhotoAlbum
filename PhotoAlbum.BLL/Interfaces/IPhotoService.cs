@@ -18,5 +18,6 @@ namespace PhotoAlbum.BLL.Interfaces
         Task<IEnumerable<PhotoDto>> GetAllPhotosAsync(Expression<Func<PhotoDto, bool>> expression);
         Task<PhotoDto> GetSingleAsync(Expression<Func<PhotoDto, bool>> expression);
         Task<PhotoDto> GetPhotoByIdAsync(int photoId);
+        Task LikeAsync(int photoId, int userId);
     }
 }

@@ -123,7 +123,9 @@ namespace PhotoAlbum.WebApi.Controllers
                 Data = Convert.ToBase64String(imageData),
                 ContentType = postedFile.ContentType,
                 ClientProfileDtoId = user.ClientProfileId,
+                //Likes = new List<string>()
             };
+            
 
             _photoService.UploadPhoto(photo);
             return Request.CreateResponse(HttpStatusCode.Created);
@@ -145,6 +147,19 @@ namespace PhotoAlbum.WebApi.Controllers
         {
             _photoService.RemovePhoto(photoId);
             return Ok(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        //[Authorize(Roles = RoleName.User)]
+        [Route("api/LikePhoto/{photoId}/{userName}")]
+        public async Task<IHttpActionResult> LikePhoto(int photoId, string userName)
+        {
+            var photo = await _photoService.GetPhotoByIdAsync(photoId);
+            var user = await _userService.FindByNameAsync(userName);
+            await _photoService.LikeAsync(photoId, user.Id);
+
+            var photoasdasd = await _photoService.GetPhotoByIdAsync(photoId);
+            return Ok(photoasdasd);
         }
     }
 }

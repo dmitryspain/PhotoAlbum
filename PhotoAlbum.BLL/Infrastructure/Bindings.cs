@@ -19,6 +19,7 @@ namespace PhotoAlbum.BLL.Infrastructure
             Bind<IRoleRepository>().To<RoleRepository>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IPhotoRepository>().To<PhotoRepository>();
+            Bind<ILikeRepository>().To<LikeRepository>();
 
             Bind<IIdentityUnitOfWork>().To<IdentityUnitOfWork>();
             Bind<IUnitOfWork>().To<UnitOfWork>();

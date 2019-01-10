@@ -27,6 +27,8 @@ namespace PhotoAlbum.BLL.Services
                 cfg.CreateMap<Photo, PhotoDto>()
                 .ForMember(x => x.ClientProfileDtoId, opt => opt.MapFrom(x => x.ClientProfileId))
                 .ForMember(x => x.Data, opt=> opt.MapFrom(x => Convert.ToBase64String(x.Data)));
+                cfg.CreateMap<Like, LikeDto>()
+                .ForMember(x => x.PhotoDtoId, opt => opt.MapFrom(x => x.PhotoId));
             }));
         }
 
@@ -81,6 +83,7 @@ namespace PhotoAlbum.BLL.Services
                 Data = Convert.FromBase64String(photoDto.Data),
                 Description = photoDto.Description,
                 ImageName = photoDto.ImageName,
+                UploadedDate = photoDto.UploadedDate,
             };
             _unitOfWork.PhotoRepository.Create(photo);
         }
@@ -94,6 +97,48 @@ namespace PhotoAlbum.BLL.Services
         public void RemovePhoto(int photoId)
         {
            _unitOfWork.PhotoRepository.Delete(photoId);
+        }
+
+        //public Task LikeAsync(int photoId, int userId)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public async Task LikeAsync(int photoId, int userId)
+        {
+            var photo = await _unitOfWork.PhotoRepository.GetByIdAsync(photoId);
+            if (photo == null)
+                throw new ArgumentException("No photo with that id");
+
+            var user = await _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
+
+            var like = new Like()
+            {
+                PhotoId = photoId,
+                UserName = user.UserName
+            };
+
+            var existingLike = photo.Likes.FirstOrDefault(x => x.PhotoId == photoId && x.UserName == user.UserName);
+
+            if (existingLike == null)
+            {
+                photo.Likes.Add(like);
+                _unitOfWork.PhotoRepository.Update(photo);
+            }
+            else
+            {
+                _unitOfWork.LikeRepository.Delete(existingLike.Id);
+                photo.Likes.Remove(existingLike);
+            }
+
+            //bool contains = await _unitOfWork.LikeRepository.GetSingleAsync(x => x.Likes.Contains(user.UserName)) != null;
+
+            //if (!photo.Likes.Contains(user.UserName))
+            //    photo.Likes.Add(user.UserName);
+            //else
+            //    photo.Likes.Remove(user.UserName);
+
+
         }
     }
 }

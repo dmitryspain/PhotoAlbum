@@ -19,6 +19,7 @@ namespace PhotoAlbum.DAL.EF
             : base(connectionString)
         {
             Database.SetInitializer(new PhotoAlbumInitializer());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<PhotoAlbumContext>());
             Debug.WriteLine(Database.Connection.ConnectionString);
         }
 
@@ -28,6 +29,7 @@ namespace PhotoAlbum.DAL.EF
         }
 
         public virtual DbSet<Photo> Photos { get; set; }
+        public virtual DbSet<Like> Likes { get; set; }
         public virtual DbSet<ClientProfile> ClientProfiles { get; set; }
 
     }

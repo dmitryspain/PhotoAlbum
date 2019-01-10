@@ -8,6 +8,7 @@ namespace PhotoAlbum.DAL.Interfaces
     {
         IPhotoRepository PhotoRepository { get; set; }
         IClientProfilesRepository ClientProfilesRepository { get; set; }
+        ILikeRepository LikeRepository { get; set; }
         Task SaveAsync();
     }
 }
