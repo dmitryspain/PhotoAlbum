@@ -15,6 +15,7 @@ using PhotoAlbum.WebApi.Models.ViewModels;
 
 namespace PhotoAlbum.WebApi.Controllers
 {
+    [RoutePrefix("api/ClientProfiles")]
     public class ClientProfileController : ApiController
     {
         private readonly IClientProfileService _clientProfileService;
@@ -36,7 +37,8 @@ namespace PhotoAlbum.WebApi.Controllers
 
         [HttpGet]
         [Authorize(Roles = RoleName.User)]
-        [Route("api/GetProfileData/{userName}")]
+        //[Route("api/GetProfileData/{userName}")]
+        [Route("{userName}")]
         public async Task<IHttpActionResult> GetProfileData(string userName)
         {
             var user = await _userService.FindByNameAsync(userName);
@@ -48,8 +50,8 @@ namespace PhotoAlbum.WebApi.Controllers
 
         [HttpGet]
         [Authorize(Roles = RoleName.User)]
-        [Route("api/IsUserHavePhoto/{userName}/{photoId}")]
-        public async Task<IHttpActionResult> IsUserHavePhoto(string userName, int photoId)
+        [Route("IsPhotoBelongToUser/{userName}/{photoId}")]
+        public async Task<IHttpActionResult> IsPhotoBelongToUser(string userName, int photoId)
         {
             var user = await _userService.FindByNameAsync(userName);
             var photoDto = await _photoService.GetPhotoByIdAsync(photoId);
@@ -61,7 +63,8 @@ namespace PhotoAlbum.WebApi.Controllers
 
         [HttpPost]
         [Authorize(Roles = RoleName.User)]
-        [Route("api/SetAvatar/{userName}")]
+        //[Route("api/SetAvatar/{userName}")]
+        [Route("SetAvatar/{userName}")]
         public async Task<HttpResponseMessage> SetAvatar(string userName)
         {
             var httpRequest = HttpContext.Current.Request;
@@ -95,7 +98,8 @@ namespace PhotoAlbum.WebApi.Controllers
 
         [HttpPost]
         [Authorize(Roles = RoleName.User)]
-        [Route("api/UploadPhoto")]
+        //[Route("api/UploadPhoto")]
+        [Route("UploadPhoto")]
         public async Task<HttpResponseMessage> UploadPhoto()
         {
             var httpRequest = HttpContext.Current.Request;
@@ -133,7 +137,8 @@ namespace PhotoAlbum.WebApi.Controllers
 
         [HttpGet]
         [Authorize(Roles = RoleName.User)]
-        [Route("api/GetPhoto/{photoId}")]
+        //[Route("api/GetPhoto/{photoId}")]
+        [Route("GetPhoto/{photoId}")]
         public async Task<IHttpActionResult> GetPhoto(int photoId)
         {
             var photo = await _photoService.GetPhotoByIdAsync(photoId);
@@ -142,24 +147,27 @@ namespace PhotoAlbum.WebApi.Controllers
 
         [HttpDelete]
         [Authorize(Roles = RoleName.User)]
-        [Route("api/RemovePhoto/{photoId}")]
-        public async Task<IHttpActionResult> RemovePhoto(int photoId)
+        //[Route("api/RemovePhoto/{photoId}")]
+        [Route("RemovePhoto/{photoId}")]
+        public IHttpActionResult RemovePhoto(int photoId)
         {
             _photoService.RemovePhoto(photoId);
             return Ok(HttpStatusCode.OK);
         }
 
-        [HttpPost]
+        [HttpPut]
         //[Authorize(Roles = RoleName.User)]
-        [Route("api/LikePhoto/{photoId}/{userName}")]
+        //[Route("api/LikePhoto/{photoId}/{userName}")]
+        [Route("LikePhoto/{photoId}/{userName}")]
         public async Task<IHttpActionResult> LikePhoto(int photoId, string userName)
         {
             var photo = await _photoService.GetPhotoByIdAsync(photoId);
             var user = await _userService.FindByNameAsync(userName);
             await _photoService.LikeAsync(photoId, user.Id);
 
-            var photoasdasd = await _photoService.GetPhotoByIdAsync(photoId);
-            return Ok(photoasdasd);
+            //var photoasdasd = await _photoService.GetPhotoByIdAsync(photoId);
+            //return Ok(photoasdasd); // WAS!
+            return Ok();
         }
     }
 }
