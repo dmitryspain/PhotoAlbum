@@ -13,12 +13,6 @@ namespace PhotoAlbum.DAL.Entities.Identity
     public class CustomUserClaim : IdentityUserClaim<int> { }
     public class CustomUserLogin : IdentityUserLogin<int> { }
 
-    //public class CustomRole : IdentityRole<int, CustomUserRole>
-    //{
-    //    public CustomRole() { }
-    //    public CustomRole(string name) { Name = name; }
-    //}
-
     public class CustomUserStore : UserStore<ApplicationUser, ApplicationRole, int,
         CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
