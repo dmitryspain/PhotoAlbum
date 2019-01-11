@@ -5,10 +5,8 @@ namespace PhotoAlbum.DAL.Entities
 {
     public class ApplicationRole : IdentityRole<int, CustomUserRole>
     {
-        public ApplicationRole(string name) => Name = name;
+        public ApplicationRole() { }
 
-        public ApplicationRole()
-        {
-        }
+        public ApplicationRole(string name) => Name = name;
     }
 }

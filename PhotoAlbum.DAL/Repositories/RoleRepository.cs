@@ -31,6 +31,11 @@ namespace PhotoAlbum.DAL.Repositories
             return await _roleManager.DeleteAsync(role);
         }
 
+        public ApplicationRole FindById(int roleId)
+        {
+            return _roleManager.FindById(roleId);
+        }
+
         public async Task<ApplicationRole> FindByIdAsync(int roleId)
         {
             return await _roleManager.FindByIdAsync(roleId);

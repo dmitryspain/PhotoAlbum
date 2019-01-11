@@ -10,6 +10,7 @@ namespace PhotoAlbum.DAL.Interfaces.IRepository
 {
     public interface IRoleRepository : IRepository<ApplicationRole>
     {
+        ApplicationRole FindById(int roleId);
         ApplicationRole FindByName(string roleName);
         Task<ApplicationRole> FindByNameAsync(string roleName);
         Task<ApplicationRole> FindByIdAsync(int roleId);
