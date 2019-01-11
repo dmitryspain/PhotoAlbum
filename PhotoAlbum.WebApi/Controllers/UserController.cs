@@ -45,10 +45,6 @@ namespace PhotoAlbum.WebApi.Controllers
         [Route("")]
         public async Task<IHttpActionResult> GetAllUsers()
         {
-            foreach(var i in Configuration.Routes)
-            {
-
-            }
             var users = await _userService.GetAllAsync();
             var usersViewModel = _mapper.Map<IEnumerable<UserViewModel>>(users);
 
