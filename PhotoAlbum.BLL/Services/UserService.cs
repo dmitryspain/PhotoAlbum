@@ -12,6 +12,7 @@ using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.Constans;
 using PhotoAlbum.DAL.Entities;
+using PhotoAlbum.DAL.Entities.Identity;
 using PhotoAlbum.DAL.Interfaces;
 
 namespace PhotoAlbum.BLL.Services
@@ -29,7 +30,11 @@ namespace PhotoAlbum.BLL.Services
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
 
             _mapper = new Mapper(new MapperConfiguration(cfg => {
-                cfg.CreateMap<ApplicationUser, UserDto>();
+                cfg.CreateMap<ApplicationUser, UserDto>().
+                ForMember(x => x.RolesId, opt => opt.MapFrom(x => x.Roles.Select(u => u.RoleId)));
+                
+                cfg.CreateMap<ApplicationRole, RoleDto>().
+                ForMember(x => x.Name, opt => opt.MapFrom(x => x.Name));
             }));
         }
 
@@ -115,6 +120,15 @@ namespace PhotoAlbum.BLL.Services
         public async Task<List<UserDto>> GetAllAsync()
         {
             var user = await _identityUnitOfWork.UserRepository.GetAllAsync();
+            try
+            {
+                await _identityUnitOfWork.UserRepository.GetAllAsync();
+                _mapper.Map<List<UserDto>>(user);
+            }
+            catch(Exception ex)
+            {
+
+            }
             return _mapper.Map<List<UserDto>>(user);
         }
 

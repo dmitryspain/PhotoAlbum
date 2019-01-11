@@ -61,6 +61,12 @@ namespace PhotoAlbum.BLL.Services
             _unitOfWork?.Dispose();
         }
 
+        public RoleDto FindById(int roleId)
+        {
+            var role = _unitOfWork.RoleRepository.FindById(roleId);
+            return _mapper.Map<RoleDto>(role ?? throw new ArgumentException("No role with that id"));
+        }
+
         public async Task<RoleDto> FindByIdAsync(int roleId)
         {
             var role = await _unitOfWork.RoleRepository.FindByIdAsync(roleId);
