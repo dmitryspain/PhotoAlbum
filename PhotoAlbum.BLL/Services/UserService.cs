@@ -120,15 +120,6 @@ namespace PhotoAlbum.BLL.Services
         public async Task<List<UserDto>> GetAllAsync()
         {
             var user = await _identityUnitOfWork.UserRepository.GetAllAsync();
-            try
-            {
-                await _identityUnitOfWork.UserRepository.GetAllAsync();
-                _mapper.Map<List<UserDto>>(user);
-            }
-            catch(Exception ex)
-            {
-
-            }
             return _mapper.Map<List<UserDto>>(user);
         }
 

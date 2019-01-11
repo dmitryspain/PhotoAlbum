@@ -10,6 +10,7 @@ namespace PhotoAlbum.BLL.Interfaces
 {
     public interface IRoleService : IDisposable
     {
+        RoleDto FindById(int roleId);
         Task<RoleDto> FindByIdAsync(int roleId);
         Task<IdentityResult> CreateAsync(string roleName);
         Task<IdentityResult> DeleteAsync(int roleId);
