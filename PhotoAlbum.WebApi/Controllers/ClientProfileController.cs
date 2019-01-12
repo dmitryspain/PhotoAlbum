@@ -32,11 +32,13 @@ namespace PhotoAlbum.WebApi.Controllers
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<ClientProfileDto, ClientProfileViewModel>();
+                cfg.CreateMap<PhotoDto, PhotoViewModel>();
+                cfg.CreateMap<LikeDto, LikeViewModel>();
             }));
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleName.User)]
+        [Authorize(Roles = RoleName.AdminAndUser)]
         //[Route("api/GetProfileData/{userName}")]
         [Route("{userName}")]
         public async Task<IHttpActionResult> GetProfileData(string userName)
@@ -49,7 +51,7 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleName.User)]
+        [Authorize(Roles = RoleName.AdminAndUser)]
         [Route("IsPhotoBelongToUser/{userName}/{photoId}")]
         public async Task<IHttpActionResult> IsPhotoBelongToUser(string userName, int photoId)
         {
@@ -62,7 +64,7 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleName.User)]
+        [Authorize(Roles = RoleName.AdminAndUser)]
         //[Route("api/SetAvatar/{userName}")]
         [Route("SetAvatar/{userName}")]
         public async Task<HttpResponseMessage> SetAvatar(string userName)
@@ -97,7 +99,7 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleName.User)]
+        [Authorize(Roles = RoleName.AdminAndUser)]
         //[Route("api/UploadPhoto")]
         [Route("UploadPhoto")]
         public async Task<HttpResponseMessage> UploadPhoto()
@@ -127,7 +129,6 @@ namespace PhotoAlbum.WebApi.Controllers
                 Data = Convert.ToBase64String(imageData),
                 ContentType = postedFile.ContentType,
                 ClientProfileDtoId = user.ClientProfileId,
-                //Likes = new List<string>()
             };
             
 
@@ -136,17 +137,18 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleName.User)]
+        [Authorize(Roles = RoleName.AdminAndUser)]
         //[Route("api/GetPhoto/{photoId}")]
         [Route("GetPhoto/{photoId}")]
         public async Task<IHttpActionResult> GetPhoto(int photoId)
         {
-            var photo = await _photoService.GetPhotoByIdAsync(photoId);
-            return Ok(photo);
+            var photoDto = await _photoService.GetPhotoByIdAsync(photoId);
+            var photoViewModel = _mapper.Map<PhotoViewModel>(photoDto);
+            return Ok(photoViewModel);
         }
 
         [HttpDelete]
-        [Authorize(Roles = RoleName.User)]
+        [Authorize(Roles = RoleName.AdminAndUser)]
         //[Route("api/RemovePhoto/{photoId}")]
         [Route("RemovePhoto/{photoId}")]
         public IHttpActionResult RemovePhoto(int photoId)
@@ -156,7 +158,7 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpPut]
-        //[Authorize(Roles = RoleName.User)]
+        [Authorize(Roles = RoleName.AdminAndUser)]
         //[Route("api/LikePhoto/{photoId}/{userName}")]
         [Route("LikePhoto/{photoId}/{userName}")]
         public async Task<IHttpActionResult> LikePhoto(int photoId, string userName)
