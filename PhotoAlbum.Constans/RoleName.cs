@@ -10,5 +10,6 @@ namespace PhotoAlbum.Constans
     {
         public const string Admin = "Administrators";
         public const string User = "Users";
+        public const string AdminAndUser = Admin + "," + User;
     }
 }
