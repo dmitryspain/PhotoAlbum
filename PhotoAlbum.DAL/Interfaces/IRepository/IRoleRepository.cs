@@ -15,6 +15,7 @@ namespace PhotoAlbum.DAL.Interfaces.IRepository
         Task<ApplicationRole> FindByNameAsync(string roleName);
         Task<ApplicationRole> FindByIdAsync(int roleId);
         Task<IdentityResult> CreateAsync(ApplicationRole role);
+        Task<IdentityResult> UpdateAsync(ApplicationRole role);
         Task<IdentityResult> DeleteAsync(ApplicationRole role);
         bool RoleExists(string roleName);
         Task<bool> RoleExistsAsync(string roleName);

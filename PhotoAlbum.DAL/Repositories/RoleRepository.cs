@@ -26,6 +26,11 @@ namespace PhotoAlbum.DAL.Repositories
             return await _roleManager.CreateAsync(role);
         }
 
+        public async Task<IdentityResult> UpdateAsync(ApplicationRole role)
+        {
+            return await _roleManager.UpdateAsync(role);
+        }
+
         public async Task<IdentityResult> DeleteAsync(ApplicationRole role)
         {
             return await _roleManager.DeleteAsync(role);

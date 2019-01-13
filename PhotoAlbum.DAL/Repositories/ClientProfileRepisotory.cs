@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using PhotoAlbum.DAL.EF;
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Interfaces.IRepository;
