@@ -164,7 +164,7 @@ namespace PhotoAlbum.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                throw new ArgumentException("Couldn't update user!" + ex.Message, ex.InnerException);
+                return IdentityResult.Failed("Couldn't update user!", ex.Message, ex.InnerException?.Message);
             }
 
             return IdentityResult.Success;

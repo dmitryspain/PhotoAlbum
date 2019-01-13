@@ -99,11 +99,6 @@ namespace PhotoAlbum.BLL.Services
            _unitOfWork.PhotoRepository.Delete(photoId);
         }
 
-        //public Task LikeAsync(int photoId, int userId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public async Task LikeAsync(int photoId, int userId)
         {
             var photo = await _unitOfWork.PhotoRepository.GetByIdAsync(photoId);
@@ -130,15 +125,6 @@ namespace PhotoAlbum.BLL.Services
                 _unitOfWork.LikeRepository.Delete(existingLike.Id);
                 photo.Likes.Remove(existingLike);
             }
-
-            //bool contains = await _unitOfWork.LikeRepository.GetSingleAsync(x => x.Likes.Contains(user.UserName)) != null;
-
-            //if (!photo.Likes.Contains(user.UserName))
-            //    photo.Likes.Add(user.UserName);
-            //else
-            //    photo.Likes.Remove(user.UserName);
-
-
         }
     }
 }
