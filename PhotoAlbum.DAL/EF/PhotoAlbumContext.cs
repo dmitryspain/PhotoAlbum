@@ -19,13 +19,6 @@ namespace PhotoAlbum.DAL.EF
             : base(connectionString)
         {
             Database.SetInitializer(new PhotoAlbumInitializer());
-            //Database.SetInitializer(new DropCreateDatabaseAlways<PhotoAlbumContext>());
-            Debug.WriteLine(Database.Connection.ConnectionString);
-        }
-
-        public static PhotoAlbumContext Create()
-        {
-            return new PhotoAlbumContext("Server=(localdb)\\mssqllocaldb;Database=PhotoAlbum;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
 
         public virtual DbSet<Photo> Photos { get; set; }
