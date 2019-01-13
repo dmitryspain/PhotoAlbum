@@ -19,10 +19,5 @@ namespace PhotoAlbum.DAL.Identity
                     : base(store)
         {
         }
-
-        public static AppRoleManager Create(IdentityFactoryOptions<AppRoleManager> options, IOwinContext context)
-        {
-            return new AppRoleManager(new CustomRoleStore(PhotoAlbumContext.Create()));
-        }
     }
 }
