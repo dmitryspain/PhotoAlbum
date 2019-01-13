@@ -36,12 +36,10 @@ namespace PhotoAlbum.WebApi.Controllers
 
         public AccountController(ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
-            //UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
-
 
         // POST api/Account/Logout
         [Route("Logout")]
@@ -56,18 +54,13 @@ namespace PhotoAlbum.WebApi.Controllers
         public async Task<IdentityResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
-            {
                 return IdentityResult.Failed(ModelState.Values.FirstOrDefault().ToString());
-            }
 
             UserDto user = new UserDto() { UserName = model.UserName, Email = model.Email };
-
             IdentityResult result = await _userService.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
-            {
                 return IdentityResult.Failed(result.Errors.FirstOrDefault());// GetErrorResult(result);
-            }
 
             return result;
         }

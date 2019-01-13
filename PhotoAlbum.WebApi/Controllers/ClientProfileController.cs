@@ -38,20 +38,19 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleName.AdminAndUser)]
-        //[Route("api/GetProfileData/{userName}")]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("{userName}")]
         public async Task<IHttpActionResult> GetProfileData(string userName)
         {
             var user = await _userService.FindByNameAsync(userName);
-            var profileDto = await _clientProfileService.GetProfileData(user.Id);
+            var profileDto = await _clientProfileService.GetProfileDataAsync(user.Id);
             var profile = _mapper.Map<ClientProfileViewModel>(profileDto);
 
             return Ok(profile);
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleName.AdminAndUser)]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("IsPhotoBelongToUser/{userName}/{photoId}")]
         public async Task<IHttpActionResult> IsPhotoBelongToUser(string userName, int photoId)
         {
@@ -64,43 +63,27 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleName.AdminAndUser)]
-        //[Route("api/SetAvatar/{userName}")]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("SetAvatar/{userName}")]
         public async Task<HttpResponseMessage> SetAvatar(string userName)
         {
             var httpRequest = HttpContext.Current.Request;
             var postedFile = httpRequest.Files["Image"];
-            var imageName = new string(Path.GetFileNameWithoutExtension(postedFile.FileName)
-                .Take(10)
-                .ToArray())
-                .Replace(' ', '-');
-            imageName += DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
 
             byte[] imageData;
+
             using (BinaryReader binaryReader = new BinaryReader(postedFile.InputStream))
-            {
                 imageData = binaryReader.ReadBytes(postedFile.ContentLength);
-            }
 
             var user = await _userService.FindByNameAsync(userName);
-
-            PhotoDto photo = new PhotoDto()
-            {
-                ImageName = imageName,
-                Data = Convert.ToBase64String(imageData),
-                ClientProfileDtoId = user.ClientProfileId,
-            };
-
             var profile = await _clientProfileService.FindByIdAsync(user.ClientProfileId);
 
-            await _clientProfileService.SetAvatar(profile.Id, photo);
+            await _clientProfileService.SetAvatarAsync(profile.Id, imageData);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleName.AdminAndUser)]
-        //[Route("api/UploadPhoto")]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("UploadPhoto")]
         public async Task<HttpResponseMessage> UploadPhoto()
         {
@@ -130,15 +113,13 @@ namespace PhotoAlbum.WebApi.Controllers
                 ContentType = postedFile.ContentType,
                 ClientProfileDtoId = user.ClientProfileId,
             };
-            
 
             _photoService.UploadPhoto(photo);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleName.AdminAndUser)]
-        //[Route("api/GetPhoto/{photoId}")]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("GetPhoto/{photoId}")]
         public async Task<IHttpActionResult> GetPhoto(int photoId)
         {
@@ -148,18 +129,16 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = RoleName.AdminAndUser)]
-        //[Route("api/RemovePhoto/{photoId}")]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("RemovePhoto/{photoId}")]
         public IHttpActionResult RemovePhoto(int photoId)
         {
             _photoService.RemovePhoto(photoId);
-            return Ok(HttpStatusCode.OK);
+            return Ok();
         }
 
         [HttpPut]
-        [Authorize(Roles = RoleName.AdminAndUser)]
-        //[Route("api/LikePhoto/{photoId}/{userName}")]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("LikePhoto/{photoId}/{userName}")]
         public async Task<IHttpActionResult> LikePhoto(int photoId, string userName)
         {
@@ -167,8 +146,29 @@ namespace PhotoAlbum.WebApi.Controllers
             var user = await _userService.FindByNameAsync(userName);
             await _photoService.LikeAsync(photoId, user.Id);
 
-            //var photoasdasd = await _photoService.GetPhotoByIdAsync(photoId);
-            //return Ok(photoasdasd); // WAS!
+            return Ok();
+        }
+
+        [HttpPut]
+        [Authorize(RoleName.Admin, RoleName.User)]
+        [Route("ChangeDescription/{userName}")]
+        public async Task<IHttpActionResult> ChangeDescription(string userName)
+        {
+            var httpRequest = HttpContext.Current.Request;
+            var description = httpRequest["Description"];
+
+            try
+            {
+                var user = await _userService.FindByNameAsync(userName);
+                var clientProfile = await _clientProfileService.FindByIdAsync(user.Id);
+                clientProfile.Description = description;
+                await _clientProfileService.ChangeDescriptionAsync(clientProfile);
+            }
+            catch(Exception ex)
+            {
+
+            }
+
             return Ok();
         }
     }

@@ -17,7 +17,6 @@ namespace PhotoAlbum.WebApi.Controllers
     [RoutePrefix("api/Users")]
     public class UserController : ApiController
     {
-        private const string AdminAndUser = "Administrators,Users";
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
@@ -41,7 +40,7 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = RoleName.User)]
+        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("")]
         public async Task<IHttpActionResult> GetAllUsers()
         {
