@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.DAL.Entities;
@@ -27,21 +29,33 @@ namespace PhotoAlbum.BLL.Services
                 cfg.CreateMap<ClientProfile, ClientProfileDto>().
                 ForMember(x=> x.Avatar, opt => opt.MapFrom(x => Convert.ToBase64String(x.Avatar)));
                 cfg.CreateMap<Photo, PhotoDto>()
-                .ForMember(x => x.Data, opt => opt.MapFrom(x => Convert.ToBase64String(x.Data)));
+                .ForMember(x => x.Data, opt => opt.MapFrom(x => Convert.ToBase64String(x.Data)))
+                .ForMember(x => x.ClientProfileDtoId, opt => opt.MapFrom(x => x.ClientProfileId))
+                .ReverseMap().ForMember(x=>x.ClientProfile, opt=>opt.Ignore());
+                
                 cfg.CreateMap<Like, LikeDto>()
                 .ForMember(x => x.PhotoDtoId, opt => opt.MapFrom(x => x.PhotoId));
             }));
         }
 
-        public async Task SetAvatar(int clientProfileId, PhotoDto avatar)
+        public async Task<IdentityResult> SetAvatarAsync(int clientProfileId, byte[] avatar)
         {
-            var clientProfile = await _unitOfWork.ClientProfilesRepository.GetByIdAsync(clientProfileId);
-            clientProfile.Avatar = Convert.FromBase64String(avatar.Data);
+            try
+            {
+                var clientProfile = await _unitOfWork.ClientProfilesRepository.GetByIdAsync(clientProfileId);
+                clientProfile.Avatar = avatar;
 
-            _unitOfWork.ClientProfilesRepository.Update(clientProfile);
+                _unitOfWork.ClientProfilesRepository.Update(clientProfile);
+            }
+            catch (DbUpdateException ex)
+            {
+                return IdentityResult.Failed("Couldn't change client profile avatar!", ex.Message, ex.InnerException?.Message);
+            }
+
+            return IdentityResult.Success;
         }
 
-        public async Task<ClientProfileDto> GetProfileData(int userId)
+        public async Task<ClientProfileDto> GetProfileDataAsync(int userId)
         {
             var user = await _identityUnitOfWork.UserRepository.GetByIdAsync(userId);
             var clientProfile = user.ClientProfile;
@@ -52,6 +66,22 @@ namespace PhotoAlbum.BLL.Services
         {
             var profile = await _unitOfWork.ClientProfilesRepository.GetByIdAsync(clientProfileId);
             return _mapper.Map<ClientProfileDto>(profile);
+        }
+
+        public async Task<IdentityResult> ChangeDescriptionAsync(ClientProfileDto clientProfileDto)
+        {
+            try
+            {
+                var clientProfile = await _unitOfWork.ClientProfilesRepository.GetByIdAsync(clientProfileDto.Id);
+                clientProfile.Description = clientProfileDto.Description;
+                _unitOfWork.ClientProfilesRepository.Update(clientProfile);
+            }
+            catch (DbUpdateException ex)
+            {
+                return IdentityResult.Failed("Couldn't change client profile description!", ex.Message, ex.InnerException?.Message);
+            }
+
+            return IdentityResult.Success;
         }
     }
 }
