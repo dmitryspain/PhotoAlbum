@@ -11,10 +11,12 @@ using AutoMapper;
 using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.Constans;
+using PhotoAlbum.WebApi.Filters;
 using PhotoAlbum.WebApi.Models.ViewModels;
 
 namespace PhotoAlbum.WebApi.Controllers
 {
+    //[GlobalExceptionFilter]
     [RoutePrefix("api/ClientProfiles")]
     public class ClientProfileController : ApiController
     {
@@ -23,11 +25,14 @@ namespace PhotoAlbum.WebApi.Controllers
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public ClientProfileController(IClientProfileService clientProfileService, IUserService userService, IPhotoService photoService)
+        public ClientProfileController(
+            IClientProfileService clientProfileService, 
+            IUserService userService, 
+            IPhotoService photoService)
         {
-            _clientProfileService = clientProfileService ?? throw new ArgumentNullException(nameof(clientProfileService));
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            _photoService = photoService ?? throw new ArgumentNullException(nameof(photoService));
+            _clientProfileService = clientProfileService;
+            _userService = userService;
+            _photoService = photoService;
 
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
@@ -40,26 +45,13 @@ namespace PhotoAlbum.WebApi.Controllers
         [HttpGet]
         [Authorize(RoleName.Admin, RoleName.User)]
         [Route("{userName}")]
-        public async Task<IHttpActionResult> GetProfileData(string userName)
+        public async Task<IHttpActionResult> GetProfile(string userName)
         {
             var user = await _userService.FindByNameAsync(userName);
-            var profileDto = await _clientProfileService.GetProfileDataAsync(user.Id);
+            var profileDto = await _clientProfileService.GetProfileAsync(user.Id);
             var profile = _mapper.Map<ClientProfileViewModel>(profileDto);
 
             return Ok(profile);
-        }
-
-        [HttpGet]
-        [Authorize(RoleName.Admin, RoleName.User)]
-        [Route("IsPhotoBelongToUser/{userName}/{photoId}")]
-        public async Task<IHttpActionResult> IsPhotoBelongToUser(string userName, int photoId)
-        {
-            var user = await _userService.FindByNameAsync(userName);
-            var photoDto = await _photoService.GetPhotoByIdAsync(photoId);
-            var photos = await _photoService.GetUserPhotosAsync(user.Id);
-            bool isContains = photos.FirstOrDefault(x => x.Id == photoDto.Id) != null;
-
-            return Ok(isContains);
         }
 
         [HttpPost]
@@ -157,17 +149,10 @@ namespace PhotoAlbum.WebApi.Controllers
             var httpRequest = HttpContext.Current.Request;
             var description = httpRequest["Description"];
 
-            try
-            {
-                var user = await _userService.FindByNameAsync(userName);
-                var clientProfile = await _clientProfileService.FindByIdAsync(user.Id);
-                clientProfile.Description = description;
-                await _clientProfileService.ChangeDescriptionAsync(clientProfile);
-            }
-            catch(Exception ex)
-            {
-
-            }
+            var user = await _userService.FindByNameAsync(userName);
+            var clientProfile = await _clientProfileService.FindByIdAsync(user.Id);
+            clientProfile.Description = description;
+            await _clientProfileService.ChangeDescriptionAsync(clientProfile);
 
             return Ok();
         }

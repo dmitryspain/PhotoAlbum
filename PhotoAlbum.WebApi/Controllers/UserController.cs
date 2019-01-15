@@ -23,13 +23,13 @@ namespace PhotoAlbum.WebApi.Controllers
 
         public UserController(IUserService userService, IRoleService roleService)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
-            _roleService = roleService ?? throw new ArgumentNullException(nameof(roleService));
+            _userService = userService;
+            _roleService = roleService;
 
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<int, RoleViewModel>()
-                .ForMember(role => role.Name, opt => 
+                .ForMember(role => role.Name, opt =>
                 opt.MapFrom(id => _roleService.FindById(id).Name));
 
                 cfg.CreateMap<UserDto, UserViewModel>().
@@ -48,41 +48,6 @@ namespace PhotoAlbum.WebApi.Controllers
             var usersViewModel = _mapper.Map<IEnumerable<UserViewModel>>(users);
 
             return Ok(usersViewModel);
-        }
-
-        [HttpDelete]
-        [Authorize(Roles = RoleName.Admin)]
-        [Route("{userName}/{roleName}")]
-        public async Task<IHttpActionResult> DeleteFromRole(string userName, string roleName)
-        {
-            var user = await _userService.FindByNameAsync(userName);
-            // if yes
-            await _userService.RemoveFromRoleAsync(user.Id, roleName);
-
-            return Ok();
-        }
-
-        [HttpPut]
-        [Authorize(Roles = RoleName.Admin)]
-        [Route("{userName}/{roleName}")]
-        public async Task<IHttpActionResult> AddToRole(string userName, string roleName)
-        {
-            var user = await _userService.FindByNameAsync(userName);
-            // if not
-            await _userService.AddToRoleAsync(user.Id, roleName);
-
-            return Ok();
-        }
-
-        [HttpDelete]
-        [Authorize(Roles = RoleName.Admin)]
-        [Route("{userName}")]
-        public async Task<IHttpActionResult> DeleteUser(string userName)
-        {
-            var user = await _userService.FindByNameAsync(userName);
-            await _userService.DeleteAsync(user.Id);
-
-            return Ok();
         }
 
     }
