@@ -15,8 +15,8 @@ namespace PhotoAlbum.WebApi.Controllers
     [RoutePrefix("api/Roles")]
     public class RolesController : ApiController
     {
-        private IRoleService _roleService;
-        private IMapper _mapper;
+        private readonly IRoleService _roleService;
+        private readonly IMapper _mapper;
 
         public RolesController(IRoleService roleService)
         {

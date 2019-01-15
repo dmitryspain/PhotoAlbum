@@ -40,7 +40,6 @@ namespace PhotoAlbum.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(RoleName.Admin, RoleName.User)]
         [Route("")]
         public async Task<IHttpActionResult> GetAllUsers()
         {

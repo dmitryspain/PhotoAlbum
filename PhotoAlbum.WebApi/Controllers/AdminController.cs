@@ -35,7 +35,6 @@ namespace PhotoAlbum.WebApi.Controllers
         public async Task<IHttpActionResult> DeleteFromRole(string userName, string roleName)
         {
             var user = await _userService.FindByNameAsync(userName);
-            // if yes
             await _userService.RemoveFromRoleAsync(user.Id, roleName);
 
             return Ok();
@@ -47,7 +46,6 @@ namespace PhotoAlbum.WebApi.Controllers
         public async Task<IHttpActionResult> AddToRole(string userName, string roleName)
         {
             var user = await _userService.FindByNameAsync(userName);
-            // if not
             await _userService.AddToRoleAsync(user.Id, roleName);
 
             return Ok();
