@@ -12,7 +12,7 @@ namespace PhotoAlbum.BLL.Interfaces
     {
         Task<IdentityResult> SetAvatarAsync(int clientProfileId, byte[] avatar);
         Task<IdentityResult> ChangeDescriptionAsync(ClientProfileDto clientProfile);
-        Task<ClientProfileDto> GetProfileDataAsync(int userId); 
+        Task<ClientProfileDto> GetProfileAsync(int userId); 
         Task<ClientProfileDto> FindByIdAsync(int clientProfileId);
 
     }

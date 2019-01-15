@@ -55,7 +55,7 @@ namespace PhotoAlbum.BLL.Services
             return IdentityResult.Success;
         }
 
-        public async Task<ClientProfileDto> GetProfileDataAsync(int userId)
+        public async Task<ClientProfileDto> GetProfileAsync(int userId)
         {
             var user = await _identityUnitOfWork.UserRepository.GetByIdAsync(userId);
             var clientProfile = user.ClientProfile;
