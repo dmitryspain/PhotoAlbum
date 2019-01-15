@@ -19,6 +19,7 @@ namespace PhotoAlbum.DAL.Interfaces.IRepository
         Task<IdentityResult> UpdateAsync(ApplicationUser user);
         Task<IdentityResult> DeleteAsync(ApplicationUser user);
         Task<IdentityResult> AddToRoleAsync(int userId, string role);
+        Task<bool> IsInRoleAsync(int userId, string role);
         Task<IdentityResult> RemoveFromRoleAsync(int userId, string role);
         Task<IList<string>> GetRolesAsync(int userId);
     }

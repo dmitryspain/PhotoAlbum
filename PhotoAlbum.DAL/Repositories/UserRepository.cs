@@ -37,6 +37,11 @@ namespace PhotoAlbum.DAL.Repositories
             return await _userManager.CreateAsync(user, password);
         }
 
+        public async Task<bool> IsInRoleAsync(int userId, string role)
+        {
+            return await _userManager.IsInRoleAsync(userId, role);
+        }
+
         public async Task<ClaimsIdentity> CreateIdentityAsync(ApplicationUser user, string authenticationType)
         {
             return await _userManager.CreateIdentityAsync(user, authenticationType);
