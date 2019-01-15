@@ -17,7 +17,6 @@ using PhotoAlbum.DAL.Interfaces;
 
 namespace PhotoAlbum.BLL.Services
 {
-
     public class UserService : IUserService
     {
         private IIdentityUnitOfWork _identityUnitOfWork;
@@ -40,12 +39,15 @@ namespace PhotoAlbum.BLL.Services
 
         public async Task<IdentityResult> AddToRoleAsync(int userId, string role)
         {
-            var user = await _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
+            if (string.IsNullOrEmpty(role))
+                return IdentityResult.Failed("Role can't be a null or empty");
 
             if (!await _identityUnitOfWork.RoleRepository.RoleExistsAsync(role))
                 return IdentityResult.Failed("This role isn't exists");
-            else
-                return await _identityUnitOfWork.UserRepository.AddToRoleAsync(userId, role);
+            else if (await _identityUnitOfWork.UserRepository.IsInRoleAsync(userId, role))
+                return IdentityResult.Failed("User currently have this role");
+
+             return await _identityUnitOfWork.UserRepository.AddToRoleAsync(userId, role);
         }
 
         public async Task<IdentityResult> CreateAsync(UserDto userDto, string password)
@@ -135,12 +137,14 @@ namespace PhotoAlbum.BLL.Services
                 return IdentityResult.Failed("Role can't be null or empty");
 
             var user = _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
-
             if (user == null)
                 return IdentityResult.Failed("This user isn't exists");
 
             if (!await _identityUnitOfWork.RoleRepository.RoleExistsAsync(role))
                 return IdentityResult.Failed("Role isn't exists");
+
+            if (await _identityUnitOfWork.UserRepository.IsInRoleAsync(userId, role))
+                return IdentityResult.Failed("User currently have this role");
 
             try
             {
@@ -148,7 +152,7 @@ namespace PhotoAlbum.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                throw new DbUpdateException("Couldn't delete user!" + ex.Message, ex.InnerException);
+                return IdentityResult.Failed("Couldn't delete user!" + ex.Message, ex.InnerException?.Message);
             }
 
             return IdentityResult.Success;
@@ -164,7 +168,7 @@ namespace PhotoAlbum.BLL.Services
             }
             catch (DbUpdateException ex)
             {
-                return IdentityResult.Failed("Couldn't update user!", ex.Message, ex.InnerException?.Message);
+                return IdentityResult.Failed("Couldn't update user!" + ex.Message, ex.InnerException?.Message);
             }
 
             return IdentityResult.Success;
