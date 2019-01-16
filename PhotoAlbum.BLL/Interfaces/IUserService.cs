@@ -15,7 +15,6 @@ namespace PhotoAlbum.BLL.Interfaces
         Task<UserDto> FindAsync(string userName, string password);
         Task<UserDto> FindByNameAsync(string userName);
         Task<UserDto> FindByIdAsync(int userId);
-        Task<ClaimsIdentity> CreateIdentityAsync(UserDto user, string authenticationType);
         Task<IdentityResult> CreateAsync(UserDto userDto, string password);
         Task<IdentityResult> UpdateAsync(UserDto user);
         Task<IdentityResult> DeleteAsync(int userId);

@@ -11,9 +11,8 @@ namespace PhotoAlbum.BLL.Interfaces
     public interface IClientProfileService
     {
         Task<IdentityResult> SetAvatarAsync(int clientProfileId, byte[] avatar);
-        Task<IdentityResult> ChangeDescriptionAsync(ClientProfileDto clientProfile);
+        Task<IdentityResult> ChangeDescriptionAsync(int clientProfileId, string description);
         Task<ClientProfileDto> GetProfileAsync(int userId); 
         Task<ClientProfileDto> FindByIdAsync(int clientProfileId);
-
     }
 }
