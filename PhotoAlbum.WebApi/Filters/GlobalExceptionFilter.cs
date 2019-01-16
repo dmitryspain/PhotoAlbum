@@ -12,24 +12,6 @@ using System.Web.Http.Filters;
 
 namespace PhotoAlbum.WebApi.Filters
 {
-    //public class GlobalExceptionFilter : ExceptionFilterAttribute
-    //{
-    //    public string Message { get; set; }
-    //    public Type ExceptionType { get; set; }
-    //    public HttpStatusCode StatusCode { get; set; }
-
-    //    public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
-    //    {
-    //        if (actionExecutedContext.Exception.GetType() == typeof())
-    //        {
-    //            StatusCode = actionExecutedContext.Response.StatusCode;
-    //            Message = actionExecutedContext.Response.RequestMessage.ToString();
-    //            actionExecutedContext.Response = actionExecutedContext.Request.CreateErrorResponse(StatusCode, Message);
-    //        }
-    //        return Task.FromResult<object>(null);
-    //    }
-    //}
-
     public class GlobalExceptionHandler : ExceptionHandler
     {
         public override void Handle(ExceptionHandlerContext context)
@@ -52,14 +34,22 @@ namespace PhotoAlbum.WebApi.Filters
                     ReasonPhrase = "NullReferenceException"
                 };
             }
+            else
+            {
+                result = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent(context.Exception.Message),
+                    ReasonPhrase = "InternalServerError"
+                };
+            }
 
             context.Result = new HttpResult(context.Request, result);
         }
 
         public class HttpResult : IHttpActionResult
         {
-            private HttpRequestMessage _request;
-            private HttpResponseMessage _httpResponseMessage;
+            private readonly HttpRequestMessage _request;
+            private readonly HttpResponseMessage _httpResponseMessage;
 
 
             public HttpResult(HttpRequestMessage request, HttpResponseMessage httpResponseMessage)
