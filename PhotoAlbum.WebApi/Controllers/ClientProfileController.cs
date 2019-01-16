@@ -16,7 +16,6 @@ using PhotoAlbum.WebApi.Models.ViewModels;
 
 namespace PhotoAlbum.WebApi.Controllers
 {
-    //[GlobalExceptionFilter]
     [RoutePrefix("api/ClientProfiles")]
     public class ClientProfileController : ApiController
     {
@@ -81,32 +80,16 @@ namespace PhotoAlbum.WebApi.Controllers
         {
             var httpRequest = HttpContext.Current.Request;
             var postedFile = httpRequest.Files["Image"];
-            var imageName = new string(Path.GetFileNameWithoutExtension(postedFile.FileName)
-                .Take(10)
-                .ToArray())
-                .Replace(' ', '-');
-            imageName += DateTime.Now.ToString("yymmssfff") + Path.GetExtension(postedFile.FileName);
-
+            var description = httpRequest["ImageDescription"];
             byte[] imageData;
+
             using (BinaryReader binaryReader = new BinaryReader(postedFile.InputStream))
-            {
                 imageData = binaryReader.ReadBytes(postedFile.ContentLength);
-            }
 
             var userName = httpRequest["UserName"];
             var user = await _userService.FindByNameAsync(userName);
 
-            PhotoDto photo = new PhotoDto()
-            {
-                ImageName = imageName,
-                Description = httpRequest["ImageDescription"],
-                UploadedDate = DateTime.Now,
-                Data = Convert.ToBase64String(imageData),
-                ContentType = postedFile.ContentType,
-                ClientProfileDtoId = user.ClientProfileId,
-            };
-
-            _photoService.UploadPhoto(photo);
+            await _photoService.UploadPhotoAsync(user.Id, imageData, description);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
@@ -150,9 +133,7 @@ namespace PhotoAlbum.WebApi.Controllers
             var description = httpRequest["Description"];
 
             var user = await _userService.FindByNameAsync(userName);
-            var clientProfile = await _clientProfileService.FindByIdAsync(user.Id);
-            clientProfile.Description = description;
-            await _clientProfileService.ChangeDescriptionAsync(clientProfile);
+            await _clientProfileService.ChangeDescriptionAsync(user.ClientProfileId, description);
 
             return Ok();
         }
