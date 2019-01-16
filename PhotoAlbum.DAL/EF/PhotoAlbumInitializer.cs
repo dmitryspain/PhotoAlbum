@@ -26,8 +26,7 @@ namespace PhotoAlbum.DAL.EF
 
             var clientProfile = new ClientProfile()
             {
-                DateOfBirdth = DateTime.Now,
-                Description = "qwertyClient",
+                Description = "Administrator's account",
                 Photos = new List<Photo>(),
             };
             context.ClientProfiles.Add(clientProfile);

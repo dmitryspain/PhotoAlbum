@@ -10,7 +10,6 @@ namespace PhotoAlbum.DAL.Entities
     public class ClientProfile : Entity<int>
     {
         public string Description { get; set; }
-        public DateTime? DateOfBirdth { get; set; }
         public virtual byte[] Avatar { get; set; }
         public virtual ICollection<Photo> Photos { get; set; } = new List<Photo>();
     }
