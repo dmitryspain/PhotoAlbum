@@ -28,7 +28,6 @@ namespace PhotoAlbum.WebApi.Providers
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            // Should really do some validation here :)
             context.Validated();
         }
 
