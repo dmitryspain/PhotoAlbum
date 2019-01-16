@@ -86,16 +86,6 @@ namespace PhotoAlbum.BLL.Services
 
         }
 
-        public async Task<ClaimsIdentity> CreateIdentityAsync(UserDto user, string authenticationType)
-        {
-            if (string.IsNullOrEmpty(authenticationType)) throw new ArgumentNullException(nameof(authenticationType));
-
-            var appUser = await _identityUnitOfWork.UserRepository.FindByIdAsync(user.Id);
-            if (appUser == null) return null;
-
-            return await _identityUnitOfWork.UserRepository.CreateIdentityAsync(appUser, authenticationType);
-        }
-
         public async Task<IdentityResult> DeleteAsync(int userId)
         {
             var user = await _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
@@ -188,7 +178,4 @@ namespace PhotoAlbum.BLL.Services
             return _mapper.Map<UserDto>(user);
         }
     }
-
-
-    
 }

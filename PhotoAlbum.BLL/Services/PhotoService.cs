@@ -38,22 +38,6 @@ namespace PhotoAlbum.BLL.Services
             return _mapper.Map<IEnumerable<PhotoDto>>(photos);
         }
 
-        public async Task<IEnumerable<PhotoDto>> GetAllPhotosAsync(Expression<Func<PhotoDto, bool>> expression)
-        {
-            var expr = _mapper.Map<Expression<Func<Photo, bool>>>(expression);
-            var photos = await _unitOfWork.PhotoRepository.GetAllAsync(expr);
-
-            return _mapper.Map<IEnumerable<PhotoDto>>(photos);
-        }
-
-        public async Task<PhotoDto> GetSingleAsync(Expression<Func<PhotoDto, bool>> expression)
-        {
-            var expr = _mapper.Map<Expression<Func<Photo, bool>>>(expression);
-            var photo = await _unitOfWork.PhotoRepository.GetSingleAsync(expr);
-
-            return _mapper.Map<PhotoDto>(photo);
-        }
-
         public async Task<IEnumerable<PhotoDto>> GetUserPhotosAsync(int userId)
         {
             var user = await _identityUnitOfWork.UserRepository.GetByIdAsync(userId);
@@ -74,17 +58,20 @@ namespace PhotoAlbum.BLL.Services
             _unitOfWork?.Dispose();
         }
 
-        public void UploadPhoto(PhotoDto photoDto)
+        public async Task UploadPhotoAsync(int userId, byte[] data, string description)
         {
+            var user = await _identityUnitOfWork.UserRepository.FindByIdAsync(userId);
+            var imageName = $"img_{DateTime.Now.ToString("yymmssfff")}";
+
             Photo photo = new Photo()
             {
-                ClientProfileId = photoDto.ClientProfileDtoId,
-                ContentType = photoDto.ContentType,
-                Data = Convert.FromBase64String(photoDto.Data),
-                Description = photoDto.Description,
-                ImageName = photoDto.ImageName,
-                UploadedDate = photoDto.UploadedDate,
+                ClientProfileId = user.ClientProfileId,
+                Data = data,
+                Description = description,
+                ImageName = imageName,
+                UploadedDate = DateTime.Now,
             };
+
             _unitOfWork.PhotoRepository.Create(photo);
         }
 

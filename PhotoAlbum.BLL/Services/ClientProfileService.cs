@@ -16,9 +16,9 @@ namespace PhotoAlbum.BLL.Services
 {
     public class ClientProfileService : IClientProfileService
     {
-        private IUnitOfWork _unitOfWork;
-        private IIdentityUnitOfWork _identityUnitOfWork;
-        private IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IIdentityUnitOfWork _identityUnitOfWork;
+        private readonly IMapper _mapper;
 
         public ClientProfileService(IUnitOfWork unitOfWork, IIdentityUnitOfWork identityUnitOfWork)
         {
@@ -31,7 +31,7 @@ namespace PhotoAlbum.BLL.Services
                 cfg.CreateMap<Photo, PhotoDto>()
                 .ForMember(x => x.Data, opt => opt.MapFrom(x => Convert.ToBase64String(x.Data)))
                 .ForMember(x => x.ClientProfileDtoId, opt => opt.MapFrom(x => x.ClientProfileId))
-                .ReverseMap().ForMember(x=>x.ClientProfile, opt=>opt.Ignore());
+                .ReverseMap().ForMember(x=>x.ClientProfile, opt => opt.Ignore());
                 
                 cfg.CreateMap<Like, LikeDto>()
                 .ForMember(x => x.PhotoDtoId, opt => opt.MapFrom(x => x.PhotoId));
@@ -68,12 +68,13 @@ namespace PhotoAlbum.BLL.Services
             return _mapper.Map<ClientProfileDto>(profile);
         }
 
-        public async Task<IdentityResult> ChangeDescriptionAsync(ClientProfileDto clientProfileDto)
+        public async Task<IdentityResult> ChangeDescriptionAsync(int clientProfileId, string description)
         {
+            var clientProfile = await _unitOfWork.ClientProfilesRepository.GetByIdAsync(clientProfileId);
+            clientProfile.Description = description;
+
             try
             {
-                var clientProfile = await _unitOfWork.ClientProfilesRepository.GetByIdAsync(clientProfileDto.Id);
-                clientProfile.Description = clientProfileDto.Description;
                 _unitOfWork.ClientProfilesRepository.Update(clientProfile);
             }
             catch (DbUpdateException ex)
