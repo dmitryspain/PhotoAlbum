@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
 using PhotoAlbum.DAL.EF;
 using PhotoAlbum.DAL.Interfaces.IRepository;
-using PhotoAlbum.DAL.Repositories.Base;
-using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Interfaces;
 
 namespace PhotoAlbum.DAL.Repositories
@@ -33,10 +30,10 @@ namespace PhotoAlbum.DAL.Repositories
 
         public void Dispose()
         {
-            PhotoRepository?.Dispose();
-            LikeRepository?.Dispose();
+            PhotoRepository.Dispose();
+            LikeRepository.Dispose();
             ClientProfilesRepository.Dispose();
-            _context?.Dispose();
+            _context.Dispose();
         }
     }
 }

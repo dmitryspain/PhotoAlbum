@@ -1,7 +1,4 @@
-﻿using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PhotoAlbum.WebApi;
-using PhotoAlbum.WebApi.Controllers;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PhotoAlbum.WebApi.Tests.Controllers
 {

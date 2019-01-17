@@ -2,11 +2,6 @@
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Interfaces.IRepository;
 using PhotoAlbum.DAL.Repositories.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoAlbum.DAL.Repositories
 {

@@ -1,6 +1,4 @@
 ﻿using Ninject.Modules;
-using PhotoAlbum.BLL.Interfaces;
-using PhotoAlbum.BLL.Services;
 using PhotoAlbum.DAL.EF;
 using PhotoAlbum.DAL.Interfaces;
 using PhotoAlbum.DAL.Interfaces.IRepository;

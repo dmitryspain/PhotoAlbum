@@ -1,5 +1,4 @@
 ﻿using PhotoAlbum.DAL.Entities.Base;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhotoAlbum.DAL.Entities

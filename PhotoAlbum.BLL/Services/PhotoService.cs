@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using PhotoAlbum.BLL.Dtos;
@@ -55,7 +53,8 @@ namespace PhotoAlbum.BLL.Services
 
         public void Dispose()
         {
-            _unitOfWork?.Dispose();
+            _unitOfWork.Dispose();
+            _identityUnitOfWork.Dispose();
         }
 
         public async Task UploadPhotoAsync(int userId, byte[] data, string description)

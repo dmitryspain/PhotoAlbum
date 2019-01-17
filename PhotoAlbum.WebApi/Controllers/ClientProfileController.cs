@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,7 +8,6 @@ using AutoMapper;
 using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.Constans;
-using PhotoAlbum.WebApi.Filters;
 using PhotoAlbum.WebApi.Models.ViewModels;
 
 namespace PhotoAlbum.WebApi.Controllers

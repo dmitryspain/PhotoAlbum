@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using PhotoAlbum.DAL.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PhotoAlbum.DAL.Entities;
 using Microsoft.AspNet.Identity;
-using System.Diagnostics;
 using PhotoAlbum.DAL.Entities.Identity;
 using PhotoAlbum.Constans;
 

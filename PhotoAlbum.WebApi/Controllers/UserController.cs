@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
-using PhotoAlbum.BLL.Services;
-using PhotoAlbum.Constans;
 using PhotoAlbum.WebApi.Models.ViewModels;
 
 namespace PhotoAlbum.WebApi.Controllers

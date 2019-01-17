@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -12,7 +9,6 @@ using PhotoAlbum.BLL.Dtos;
 using PhotoAlbum.BLL.Interfaces;
 using PhotoAlbum.Constans;
 using PhotoAlbum.DAL.Entities;
-using PhotoAlbum.DAL.Entities.Identity;
 using PhotoAlbum.DAL.Interfaces;
 
 namespace PhotoAlbum.BLL.Services
@@ -94,7 +90,8 @@ namespace PhotoAlbum.BLL.Services
 
         public void Dispose()
         {
-            _unitOfWork?.Dispose();
+            _unitOfWork.Dispose();
+            _identityUnitOfWork.Dispose();
         }
 
         public async Task<UserDto> FindAsync(string userName, string password)

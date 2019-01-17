@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using PhotoAlbum.DAL.EF;
 using PhotoAlbum.DAL.Interfaces.IRepository;
 using PhotoAlbum.DAL.Repositories.Base;
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using PhotoAlbum.DAL.Entities.Identity;
 
 namespace PhotoAlbum.DAL.Repositories

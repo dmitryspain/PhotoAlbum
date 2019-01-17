@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -83,6 +79,12 @@ namespace PhotoAlbum.BLL.Services
             }
 
             return IdentityResult.Success;
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
+            _identityUnitOfWork.Dispose();
         }
     }
 }

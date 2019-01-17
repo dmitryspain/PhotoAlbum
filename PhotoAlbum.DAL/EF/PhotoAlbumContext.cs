@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using PhotoAlbum.DAL.Entities;
 using PhotoAlbum.DAL.Entities.Identity;

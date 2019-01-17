@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -58,7 +56,7 @@ namespace PhotoAlbum.BLL.Services
 
         public void Dispose()
         {
-            _unitOfWork?.Dispose();
+            _unitOfWork.Dispose();
         }
 
         public RoleDto FindById(int roleId)

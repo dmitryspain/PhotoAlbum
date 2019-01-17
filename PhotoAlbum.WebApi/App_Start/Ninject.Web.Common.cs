@@ -6,7 +6,6 @@ namespace PhotoAlbum.WebApi.App_Start
     using System;
     using System.Web;
     using System.Web.Http;
-    using Microsoft.Owin.Security.OAuth;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -15,7 +14,6 @@ namespace PhotoAlbum.WebApi.App_Start
     using Ninject.Web.WebApi;
     using PhotoAlbum.BLL.Interfaces;
     using PhotoAlbum.BLL.Services;
-    using PhotoAlbum.WebApi.Providers;
 
     public static class NinjectWebCommon 
     {

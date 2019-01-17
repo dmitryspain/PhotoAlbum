@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using PhotoAlbum.DAL.EF;
 using PhotoAlbum.DAL.Interfaces.IRepository;
@@ -98,7 +97,6 @@ namespace PhotoAlbum.DAL.Repositories.Base
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }
