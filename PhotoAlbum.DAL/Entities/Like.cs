@@ -1,5 +1,6 @@
 ﻿using PhotoAlbum.DAL.Entities.Base;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PhotoAlbum.DAL.Entities
 {
@@ -7,6 +8,7 @@ namespace PhotoAlbum.DAL.Entities
     {
         public int PhotoId { get; set; }
         public virtual Photo Photo { get; set; }
+        [Required]
         public string UserName { get; set; }
     }
 }

@@ -11,8 +11,13 @@ namespace PhotoAlbum.DAL.Entities
 {
     public class Photo : Entity<int>
     {
+        [Required]
         public string ImageName { get; set; }
+
+        [Required]
         public string Description { get; set; }
+
+        [Required]
         public byte[] Data { get; set; }
         public DateTime? UploadedDate { get; set; }
         public virtual List<Like> Likes { get; set; } = new List<Like>();
